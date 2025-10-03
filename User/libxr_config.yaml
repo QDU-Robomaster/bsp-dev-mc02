@@ -1,0 +1,253 @@
+terminal_source: ''
+software_timer:
+  priority: 2
+  stack_depth: 1024
+SPI:
+  spi1:
+    tx_buffer_size: 32
+    rx_buffer_size: 32
+    dma_section: .axi_ram
+    dma_enable_min_size: 3
+  spi2:
+    tx_buffer_size: 32
+    rx_buffer_size: 32
+    dma_section: .axi_ram
+    dma_enable_min_size: 3
+  spi6:
+    tx_buffer_size: 32
+    rx_buffer_size: 32
+    dma_section: .ram_d3
+    dma_enable_min_size: 3
+I2C:
+  i2c4:
+    buffer_size: 32
+    dma_section: .axi_ram
+    dma_enable_min_size: 3
+USART:
+  uart7:
+    tx_buffer_size: 128
+    rx_buffer_size: 128
+    dma_section: .axi_ram
+    tx_queue_size: 5
+  usart1:
+    tx_buffer_size: 128
+    rx_buffer_size: 128
+    dma_section: .axi_ram
+    tx_queue_size: 5
+  usart10:
+    tx_buffer_size: 128
+    rx_buffer_size: 128
+    dma_section: .axi_ram
+    tx_queue_size: 5
+  usart2:
+    tx_buffer_size: 128
+    rx_buffer_size: 128
+    dma_section: .axi_ram
+    tx_queue_size: 5
+  usart3:
+    tx_buffer_size: 128
+    rx_buffer_size: 128
+    dma_section: .axi_ram
+    tx_queue_size: 5
+ADC:
+  adc1:
+    buffer_size: 128
+    dma_section: .axi_ram
+    vref: 3.3
+FDCAN:
+  FDCAN1:
+    queue_size: 5
+  FDCAN2:
+    queue_size: 5
+  FDCAN3:
+    queue_size: 5
+USB:
+  usb_otg_hs:
+    enable: false
+Terminal:
+  read_buff_size: 32
+  max_line_size: 32
+  max_arg_number: 5
+  max_history_number: 5
+SYSTEM: FreeRTOS
+DAC:
+  dac1:
+    init_voltage: 0.0
+    vref: 3.3
+IWDG:
+  iwdg1:
+    timeout_ms: 1000
+    feed_interval_ms: 250
+Watchdog:
+  run_as_thread: false
+  feed_interval_ms: 250
+FlashLayout:
+  model: STM32H723VGT6
+  flash_base: '0x08000000'
+  flash_size_kb: 1024
+  sectors:
+  - index: 0
+    address: '0x08000000'
+    size_kb: 128.0
+  - index: 1
+    address: '0x08020000'
+    size_kb: 128.0
+  - index: 2
+    address: '0x08040000'
+    size_kb: 128.0
+  - index: 3
+    address: '0x08060000'
+    size_kb: 128.0
+  - index: 4
+    address: '0x08080000'
+    size_kb: 128.0
+  - index: 5
+    address: '0x080A0000'
+    size_kb: 128.0
+  - index: 6
+    address: '0x080C0000'
+    size_kb: 128.0
+  - index: 7
+    address: '0x080E0000'
+    size_kb: 128.0
+device_aliases:
+  power_manager:
+    type: PowerManager
+    aliases:
+    - power_manager
+  LCD_BLK:
+    type: GPIO
+    aliases:
+    - LCD_BLK
+  LCD_RES:
+    type: GPIO
+    aliases:
+    - LCD_RES
+  DCMI_REST:
+    type: GPIO
+    aliases:
+    - DCMI_REST
+  ACC_CS:
+    type: GPIO
+    aliases:
+    - ACC_CS
+  POWER_24V_2:
+    type: GPIO
+    aliases:
+    - POWER_24V_2
+  POWER_24V_1:
+    type: GPIO
+    aliases:
+    - POWER_24V_1
+  POWER_5V:
+    type: GPIO
+    aliases:
+    - POWER_5V
+  DCMI_PWDN:
+    type: GPIO
+    aliases:
+    - DCMI_PWDN
+  LCD_DC:
+    type: GPIO
+    aliases:
+    - LCD_DC
+  ACC_INT:
+    type: GPIO
+    aliases:
+    - ACC_INT
+  GYRO_INT:
+    type: GPIO
+    aliases:
+    - GYRO_INT
+  LCD_CS:
+    type: GPIO
+    aliases:
+    - LCD_CS
+  pwm_tim1_ch1:
+    type: PWM
+    aliases:
+    - pwm_tim1_ch1
+  pwm_tim1_ch3:
+    type: PWM
+    aliases:
+    - pwm_tim1_ch3
+  pwm_tim12_ch2:
+    type: PWM
+    aliases:
+    - pwm_tim12_ch2
+  pwm_tim2_ch1:
+    type: PWM
+    aliases:
+    - pwm_tim2_ch1
+  pwm_tim2_ch3:
+    type: PWM
+    aliases:
+    - pwm_tim2_ch3
+  pwm_tim3_ch4:
+    type: PWM
+    aliases:
+    - pwm_tim3_ch4
+  adc1_adc_channel_4:
+    type: ADC
+    aliases:
+    - adc1_adc_channel_4
+  adc1_adc_channel_19:
+    type: ADC
+    aliases:
+    - adc1_adc_channel_19
+  dac1_out1:
+    type: DAC
+    aliases:
+    - dac1_out1
+  dac1_out2:
+    type: DAC
+    aliases:
+    - dac1_out2
+  spi1:
+    type: SPI
+    aliases:
+    - spi1
+  spi2:
+    type: SPI
+    aliases:
+    - spi2
+  spi6:
+    type: SPI
+    aliases:
+    - spi6
+  uart7:
+    type: UART
+    aliases:
+    - uart7
+  usart1:
+    type: UART
+    aliases:
+    - usart1
+  usart10:
+    type: UART
+    aliases:
+    - usart10
+  usart2:
+    type: UART
+    aliases:
+    - usart2
+  usart3:
+    type: UART
+    aliases:
+    - usart3
+  i2c4:
+    type: I2C
+    aliases:
+    - i2c4
+  fdcan1:
+    type: FDCAN
+    aliases:
+    - fdcan1
+  fdcan2:
+    type: FDCAN
+    aliases:
+    - fdcan2
+  fdcan3:
+    type: FDCAN
+    aliases:
+    - fdcan3

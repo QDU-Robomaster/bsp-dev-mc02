@@ -1,0 +1,9 @@
+global_settings:
+  monitor_sleep_ms: 1000
+modules:
+- id: buzzer
+  name: BuzzerAlarm
+  constructor_args:
+    alarm_freq: 1500
+    alarm_duration: 300
+    alarm_delay: 300

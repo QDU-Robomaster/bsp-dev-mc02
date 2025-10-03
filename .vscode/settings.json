@@ -1,0 +1,37 @@
+{
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true,
+    "files.trimFinalNewlines": true,
+    "files.autoSave": "afterDelay",
+    "files.associations": {
+        "*.c": "c",
+        "*.h": "c",
+        "*.cpp": "cpp",
+        "*.hpp": "cpp",
+    },
+    "editor.trimAutoWhitespace": true,
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": false,
+    "editor.inlineSuggest.enabled": true,
+    "editor.parameterHints.enabled": true,
+    "editor.snippetSuggestions": "bottom",
+    "editor.suggest.showStatusBar": true,
+    "editor.inlayHints.enabled": "offUnlessPressed",
+    "cmake.options.statusBarVisibility": "icon",
+    "cmake.parallelJobs": 8,
+    "cmake.ctest.allowParallelJobs": true,
+    "cmake.ctest.parallelJobs": 8,
+    "cmake.cmakePath": "cube-cmake",
+    "cmake.configureArgs": [
+        "-DCMAKE_COMMAND=cube-cmake"
+    ],
+    "cmake.preferredGenerators": [
+        "Ninja"
+    ],
+    "stm32cube-ide-clangd.path": "cube",
+    "stm32cube-ide-clangd.arguments": [
+        "starm-clangd",
+        "--query-driver=${env:CUBE_BUNDLE_PATH}/st-arm-clang/19.1.6+st.9/bin/starm-clang.exe",
+        "--query-driver=${env:CUBE_BUNDLE_PATH}/st-arm-clang/19.1.6+st.9/bin/starm-clang++.exe"
+    ],
+}

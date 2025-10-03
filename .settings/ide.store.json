@@ -1,0 +1,4 @@
+{
+  "device": "STM32H723VGT6",
+  "toolchain": "CLANG"
+}
