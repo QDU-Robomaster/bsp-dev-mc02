@@ -21,10 +21,10 @@
 #include "usb_otg.h"
 
 /* USER CODE BEGIN 0 */
-
+#include <string.h>
 /* USER CODE END 0 */
 
-PCD_HandleTypeDef hpcd_USB_OTG_HS;
+PCD_HandleTypeDef hpcd_USB_OTG_HS __attribute__((section(".axi_ram")));
 
 /* USB_OTG_HS init function */
 
@@ -32,7 +32,7 @@ void MX_USB_OTG_HS_PCD_Init(void)
 {
 
   /* USER CODE BEGIN USB_OTG_HS_Init 0 */
-
+  memset(&hpcd_USB_OTG_HS, 0, sizeof(hpcd_USB_OTG_HS));
   /* USER CODE END USB_OTG_HS_Init 0 */
 
   /* USER CODE BEGIN USB_OTG_HS_Init 1 */
