@@ -1,58 +1,53 @@
-terminal_source: ''
+terminal_source: usb_otg_hs
 software_timer:
   priority: 2
   stack_depth: 1024
 SPI:
-  spi1:
-    tx_buffer_size: 32
-    rx_buffer_size: 32
-    dma_section: .axi_ram
-    dma_enable_min_size: 3
   spi2:
     tx_buffer_size: 32
     rx_buffer_size: 32
-    dma_section: .axi_ram
+    dma_section: ''
     dma_enable_min_size: 3
   spi6:
     tx_buffer_size: 32
     rx_buffer_size: 32
-    dma_section: .ram_d3
-    dma_enable_min_size: 3
-I2C:
-  i2c4:
-    buffer_size: 32
-    dma_section: .axi_ram
+    dma_section: ''
     dma_enable_min_size: 3
 USART:
+  uart5:
+    tx_buffer_size: 128
+    rx_buffer_size: 128
+    dma_section: ''
+    tx_queue_size: 5
   uart7:
     tx_buffer_size: 128
     rx_buffer_size: 128
-    dma_section: .axi_ram
+    dma_section: ''
     tx_queue_size: 5
   usart1:
     tx_buffer_size: 128
     rx_buffer_size: 128
-    dma_section: .axi_ram
+    dma_section: ''
     tx_queue_size: 5
   usart10:
     tx_buffer_size: 128
     rx_buffer_size: 128
-    dma_section: .axi_ram
+    dma_section: ''
     tx_queue_size: 5
   usart2:
     tx_buffer_size: 128
     rx_buffer_size: 128
-    dma_section: .axi_ram
+    dma_section: ''
     tx_queue_size: 5
   usart3:
     tx_buffer_size: 128
     rx_buffer_size: 128
-    dma_section: .axi_ram
+    dma_section: ''
     tx_queue_size: 5
 ADC:
   adc1:
     buffer_size: 128
-    dma_section: .axi_ram
+    dma_section: ''
     vref: 3.3
 FDCAN:
   FDCAN1:
@@ -63,7 +58,22 @@ FDCAN:
     queue_size: 5
 USB:
   usb_otg_hs:
-    enable: false
+    enable: true
+    ep0_packet_size: 8
+    tx_buffer_size: 128
+    rx_buffer_size: 128
+    rx_fifo_size: 256
+    tx_fifo_size: 128
+    dma_section: ''
+    cdc_tx_fifo_size: 128
+    cdc_rx_fifo_size: 128
+    cdc_queue_size: 3
+    vid: 1155
+    pid: 22336
+    bcd: 62471
+    manufacturer: XRobot
+    product: STM32 XRUSB USB_OTG_HS CDC Demo
+    serial: '123456789'
 Terminal:
   read_buff_size: 32
   max_line_size: 32
@@ -74,42 +84,6 @@ DAC:
   dac1:
     init_voltage: 0.0
     vref: 3.3
-IWDG:
-  iwdg1:
-    timeout_ms: 1000
-    feed_interval_ms: 250
-Watchdog:
-  run_as_thread: false
-  feed_interval_ms: 250
-FlashLayout:
-  model: STM32H723VGT6
-  flash_base: '0x08000000'
-  flash_size_kb: 1024
-  sectors:
-  - index: 0
-    address: '0x08000000'
-    size_kb: 128.0
-  - index: 1
-    address: '0x08020000'
-    size_kb: 128.0
-  - index: 2
-    address: '0x08040000'
-    size_kb: 128.0
-  - index: 3
-    address: '0x08060000'
-    size_kb: 128.0
-  - index: 4
-    address: '0x08080000'
-    size_kb: 128.0
-  - index: 5
-    address: '0x080A0000'
-    size_kb: 128.0
-  - index: 6
-    address: '0x080C0000'
-    size_kb: 128.0
-  - index: 7
-    address: '0x080E0000'
-    size_kb: 128.0
 device_aliases:
   power_manager:
     type: PowerManager
@@ -123,10 +97,6 @@ device_aliases:
     type: GPIO
     aliases:
     - LCD_RES
-  DCMI_REST:
-    type: GPIO
-    aliases:
-    - DCMI_REST
   ACC_CS:
     type: GPIO
     aliases:
@@ -135,26 +105,22 @@ device_aliases:
     type: GPIO
     aliases:
     - POWER_24V_2
-  POWER_24V_1:
+  PC14_OSC32_IN:
     type: GPIO
     aliases:
-    - POWER_24V_1
+    - PC14_OSC32_IN
   POWER_5V:
     type: GPIO
     aliases:
     - POWER_5V
-  DCMI_PWDN:
-    type: GPIO
-    aliases:
-    - DCMI_PWDN
-  LCD_DC:
-    type: GPIO
-    aliases:
-    - LCD_DC
   ACC_INT:
     type: GPIO
     aliases:
     - ACC_INT
+  W25Q64_CS:
+    type: GPIO
+    aliases:
+    - W25Q64_CS
   GYRO_INT:
     type: GPIO
     aliases:
@@ -195,18 +161,10 @@ device_aliases:
     type: ADC
     aliases:
     - adc1_adc_channel_19
-  dac1_out1:
-    type: DAC
-    aliases:
-    - dac1_out1
   dac1_out2:
     type: DAC
     aliases:
     - dac1_out2
-  spi1:
-    type: SPI
-    aliases:
-    - spi1
   spi2:
     type: SPI
     aliases:
@@ -215,6 +173,10 @@ device_aliases:
     type: SPI
     aliases:
     - spi6
+  uart5:
+    type: UART
+    aliases:
+    - uart5
   uart7:
     type: UART
     aliases:
@@ -235,10 +197,6 @@ device_aliases:
     type: UART
     aliases:
     - usart3
-  i2c4:
-    type: I2C
-    aliases:
-    - i2c4
   fdcan1:
     type: FDCAN
     aliases:
@@ -251,3 +209,36 @@ device_aliases:
     type: FDCAN
     aliases:
     - fdcan3
+  usb_otg_hs_cdc:
+    type: UART
+    aliases:
+    - usb_otg_hs_cdc
+FlashLayout:
+  model: STM32H723VGT6
+  flash_base: '0x08000000'
+  flash_size_kb: 1024
+  sectors:
+  - index: 0
+    address: '0x08000000'
+    size_kb: 128.0
+  - index: 1
+    address: '0x08020000'
+    size_kb: 128.0
+  - index: 2
+    address: '0x08040000'
+    size_kb: 128.0
+  - index: 3
+    address: '0x08060000'
+    size_kb: 128.0
+  - index: 4
+    address: '0x08080000'
+    size_kb: 128.0
+  - index: 5
+    address: '0x080A0000'
+    size_kb: 128.0
+  - index: 6
+    address: '0x080C0000'
+    size_kb: 128.0
+  - index: 7
+    address: '0x080E0000'
+    size_kb: 128.0

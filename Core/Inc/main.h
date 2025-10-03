@@ -59,32 +59,24 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define POWER_24V_2_Pin GPIO_PIN_13
 #define POWER_24V_2_GPIO_Port GPIOC
-#define POWER_24V_1_Pin GPIO_PIN_14
-#define POWER_24V_1_GPIO_Port GPIOC
 #define POWER_5V_Pin GPIO_PIN_15
 #define POWER_5V_GPIO_Port GPIOC
 #define ACC_CS_Pin GPIO_PIN_0
 #define ACC_CS_GPIO_Port GPIOC
 #define GYRO_CS_Pin GPIO_PIN_3
 #define GYRO_CS_GPIO_Port GPIOC
-#define DCMI_PWDN_Pin GPIO_PIN_5
-#define DCMI_PWDN_GPIO_Port GPIOC
 #define ACC_INT_Pin GPIO_PIN_10
 #define ACC_INT_GPIO_Port GPIOE
-#define ACC_INT_EXTI_IRQn EXTI15_10_IRQn
+#define W25Q64_CS_Pin GPIO_PIN_11
+#define W25Q64_CS_GPIO_Port GPIOE
 #define GYRO_INT_Pin GPIO_PIN_12
 #define GYRO_INT_GPIO_Port GPIOE
-#define GYRO_INT_EXTI_IRQn EXTI15_10_IRQn
 #define LCD_CS_Pin GPIO_PIN_15
 #define LCD_CS_GPIO_Port GPIOE
 #define LCD_BLK_Pin GPIO_PIN_10
 #define LCD_BLK_GPIO_Port GPIOB
 #define LCD_RES_Pin GPIO_PIN_11
 #define LCD_RES_GPIO_Port GPIOB
-#define DCMI_REST_Pin GPIO_PIN_12
-#define DCMI_REST_GPIO_Port GPIOB
-#define LCD_DC_Pin GPIO_PIN_10
-#define LCD_DC_GPIO_Port GPIOD
 
 /* USER CODE BEGIN Private defines */
 

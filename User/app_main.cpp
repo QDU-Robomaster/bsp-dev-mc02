@@ -33,38 +33,42 @@ extern DAC_HandleTypeDef hdac1;
 extern FDCAN_HandleTypeDef hfdcan1;
 extern FDCAN_HandleTypeDef hfdcan2;
 extern FDCAN_HandleTypeDef hfdcan3;
-extern I2C_HandleTypeDef hi2c4;
 extern PCD_HandleTypeDef hpcd_USB_OTG_HS;
-extern SPI_HandleTypeDef hspi1;
 extern SPI_HandleTypeDef hspi2;
 extern SPI_HandleTypeDef hspi6;
 extern TIM_HandleTypeDef htim12;
 extern TIM_HandleTypeDef htim1;
 extern TIM_HandleTypeDef htim2;
 extern TIM_HandleTypeDef htim3;
+extern TIM_HandleTypeDef htim4;
 extern UART_HandleTypeDef huart10;
 extern UART_HandleTypeDef huart1;
 extern UART_HandleTypeDef huart2;
 extern UART_HandleTypeDef huart3;
+extern UART_HandleTypeDef huart5;
 extern UART_HandleTypeDef huart7;
 
 /* DMA Resources */
-static uint16_t adc1_buf[64] __attribute__((section(".axi_ram")));
-static uint8_t spi1_tx_buf[32] __attribute__((section(".axi_ram")));
-static uint8_t spi2_tx_buf[32] __attribute__((section(".axi_ram")));
-static uint8_t spi2_rx_buf[32] __attribute__((section(".axi_ram")));
-static uint8_t spi6_tx_buf[32] __attribute__((section(".ram_d3")));
-static uint8_t uart7_tx_buf[128] __attribute__((section(".axi_ram")));
-static uint8_t uart7_rx_buf[128] __attribute__((section(".axi_ram")));
-static uint8_t usart1_tx_buf[128] __attribute__((section(".axi_ram")));
-static uint8_t usart1_rx_buf[128] __attribute__((section(".axi_ram")));
-static uint8_t usart10_tx_buf[128] __attribute__((section(".axi_ram")));
-static uint8_t usart10_rx_buf[128] __attribute__((section(".axi_ram")));
-static uint8_t usart2_tx_buf[128] __attribute__((section(".axi_ram")));
-static uint8_t usart2_rx_buf[128] __attribute__((section(".axi_ram")));
-static uint8_t usart3_tx_buf[128] __attribute__((section(".axi_ram")));
-static uint8_t usart3_rx_buf[128] __attribute__((section(".axi_ram")));
-static uint8_t i2c4_buf[32] __attribute__((section(".axi_ram")));
+static uint16_t adc1_buf[64];
+static uint8_t spi2_tx_buf[32];
+static uint8_t spi2_rx_buf[32];
+static uint8_t spi6_tx_buf[32];
+static uint8_t uart5_rx_buf[128];
+static uint8_t uart7_tx_buf[128];
+static uint8_t uart7_rx_buf[128];
+static uint8_t usart1_tx_buf[128];
+static uint8_t usart1_rx_buf[128];
+static uint8_t usart10_tx_buf[128];
+static uint8_t usart10_rx_buf[128];
+static uint8_t usart2_tx_buf[128];
+static uint8_t usart2_rx_buf[128];
+static uint8_t usart3_tx_buf[128];
+static uint8_t usart3_rx_buf[128];
+static uint8_t usb_otg_hs_ep0_in_buf[8];
+static uint8_t usb_otg_hs_ep0_out_buf[8];
+static uint8_t usb_otg_hs_ep1_in_buf[128];
+static uint8_t usb_otg_hs_ep1_out_buf[128];
+static uint8_t usb_otg_hs_ep2_in_buf[16];
 
 extern "C" void app_main(void) {
   // clang-format on
@@ -74,21 +78,19 @@ extern "C" void app_main(void) {
   /* User Code End 2 */
   // clang-format off
   // NOLINTBEGIN
-  STM32Timebase timebase;
+  STM32TimerTimebase timebase(&htim4);
   PlatformInit(2, 1024);
   STM32PowerManager power_manager;
 
   /* GPIO Configuration */
   STM32GPIO LCD_BLK(LCD_BLK_GPIO_Port, LCD_BLK_Pin);
   STM32GPIO LCD_RES(LCD_RES_GPIO_Port, LCD_RES_Pin);
-  STM32GPIO DCMI_REST(DCMI_REST_GPIO_Port, DCMI_REST_Pin);
   STM32GPIO ACC_CS(ACC_CS_GPIO_Port, ACC_CS_Pin);
   STM32GPIO POWER_24V_2(POWER_24V_2_GPIO_Port, POWER_24V_2_Pin);
-  STM32GPIO POWER_24V_1(POWER_24V_1_GPIO_Port, POWER_24V_1_Pin);
+  STM32GPIO PC14_OSC32_IN(GPIOC, GPIO_PIN_14);
   STM32GPIO POWER_5V(POWER_5V_GPIO_Port, POWER_5V_Pin);
-  STM32GPIO DCMI_PWDN(DCMI_PWDN_GPIO_Port, DCMI_PWDN_Pin);
-  STM32GPIO LCD_DC(LCD_DC_GPIO_Port, LCD_DC_Pin);
   STM32GPIO ACC_INT(ACC_INT_GPIO_Port, ACC_INT_Pin, EXTI15_10_IRQn);
+  STM32GPIO W25Q64_CS(W25Q64_CS_GPIO_Port, W25Q64_CS_Pin);
   STM32GPIO GYRO_INT(GYRO_INT_GPIO_Port, GYRO_INT_Pin, EXTI15_10_IRQn);
   STM32GPIO LCD_CS(LCD_CS_GPIO_Port, LCD_CS_Pin);
 
@@ -108,14 +110,14 @@ extern "C" void app_main(void) {
 
   STM32PWM pwm_tim3_ch4(&htim3, TIM_CHANNEL_4, false);
 
-  STM32DAC dac1_out1(&hdac1, DAC_CHANNEL_1, 0.0, 3.3);
   STM32DAC dac1_out2(&hdac1, DAC_CHANNEL_2, 0.0, 3.3);
-
-  STM32SPI spi1(&hspi1, {nullptr, 0}, spi1_tx_buf, 3);
 
   STM32SPI spi2(&hspi2, spi2_rx_buf, spi2_tx_buf, 3);
 
   STM32SPI spi6(&hspi6, {nullptr, 0}, spi6_tx_buf, 3);
+
+  STM32UART uart5(&huart5,
+              uart5_rx_buf, {nullptr, 0}, 5);
 
   STM32UART uart7(&huart7,
               uart7_rx_buf, uart7_tx_buf, 5);
@@ -132,13 +134,27 @@ extern "C" void app_main(void) {
   STM32UART usart3(&huart3,
               usart3_rx_buf, usart3_tx_buf, 5);
 
-  STM32I2C i2c4(&hi2c4, i2c4_buf, 3);
-
   STM32CANFD fdcan1(&hfdcan1, 5);
 
   STM32CANFD fdcan2(&hfdcan2, 5);
 
   STM32CANFD fdcan3(&hfdcan3, 5);
+
+  static constexpr auto USB_OTG_HS_LANG_PACK = LibXR::USB::DescriptorStrings::MakeLanguagePack(LibXR::USB::DescriptorStrings::Language::EN_US, "XRobot", "STM32 XRUSB USB_OTG_HS CDC Demo", "123456789");
+  LibXR::USB::CDCUart usb_otg_hs_cdc(128, 128, 3);
+
+  STM32USBDeviceOtgHS usb_hs(
+      &hpcd_USB_OTG_HS,
+      256,
+      {usb_otg_hs_ep0_out_buf, usb_otg_hs_ep1_out_buf},
+      {{usb_otg_hs_ep0_in_buf, 8}, {usb_otg_hs_ep1_in_buf, 128}, {usb_otg_hs_ep2_in_buf, 16}},
+      USB::DeviceDescriptor::PacketSize0::SIZE_8,
+      0x483, 0x5740, 0xF407,
+      {&USB_OTG_HS_LANG_PACK},
+      {{&usb_otg_hs_cdc}}
+  );
+  usb_hs.Init();
+  usb_hs.Start();
 
   /* Terminal Configuration */
 
@@ -147,14 +163,12 @@ extern "C" void app_main(void) {
     LibXR::Entry<LibXR::PowerManager>({power_manager, {"power_manager"}}),
     LibXR::Entry<LibXR::GPIO>({LCD_BLK, {"LCD_BLK"}}),
     LibXR::Entry<LibXR::GPIO>({LCD_RES, {"LCD_RES"}}),
-    LibXR::Entry<LibXR::GPIO>({DCMI_REST, {"DCMI_REST"}}),
     LibXR::Entry<LibXR::GPIO>({ACC_CS, {"ACC_CS"}}),
     LibXR::Entry<LibXR::GPIO>({POWER_24V_2, {"POWER_24V_2"}}),
-    LibXR::Entry<LibXR::GPIO>({POWER_24V_1, {"POWER_24V_1"}}),
+    LibXR::Entry<LibXR::GPIO>({PC14_OSC32_IN, {"PC14_OSC32_IN"}}),
     LibXR::Entry<LibXR::GPIO>({POWER_5V, {"POWER_5V"}}),
-    LibXR::Entry<LibXR::GPIO>({DCMI_PWDN, {"DCMI_PWDN"}}),
-    LibXR::Entry<LibXR::GPIO>({LCD_DC, {"LCD_DC"}}),
     LibXR::Entry<LibXR::GPIO>({ACC_INT, {"ACC_INT"}}),
+    LibXR::Entry<LibXR::GPIO>({W25Q64_CS, {"W25Q64_CS"}}),
     LibXR::Entry<LibXR::GPIO>({GYRO_INT, {"GYRO_INT"}}),
     LibXR::Entry<LibXR::GPIO>({LCD_CS, {"LCD_CS"}}),
     LibXR::Entry<LibXR::PWM>({pwm_tim1_ch1, {"pwm_tim1_ch1"}}),
@@ -165,20 +179,19 @@ extern "C" void app_main(void) {
     LibXR::Entry<LibXR::PWM>({pwm_tim3_ch4, {"pwm_tim3_ch4"}}),
     LibXR::Entry<LibXR::ADC>({adc1_adc_channel_4, {"adc1_adc_channel_4"}}),
     LibXR::Entry<LibXR::ADC>({adc1_adc_channel_19, {"adc1_adc_channel_19"}}),
-    LibXR::Entry<LibXR::DAC>({dac1_out1, {"dac1_out1"}}),
     LibXR::Entry<LibXR::DAC>({dac1_out2, {"dac1_out2"}}),
-    LibXR::Entry<LibXR::SPI>({spi1, {"spi1"}}),
     LibXR::Entry<LibXR::SPI>({spi2, {"spi2"}}),
     LibXR::Entry<LibXR::SPI>({spi6, {"spi6"}}),
+    LibXR::Entry<LibXR::UART>({uart5, {"uart5"}}),
     LibXR::Entry<LibXR::UART>({uart7, {"uart7"}}),
     LibXR::Entry<LibXR::UART>({usart1, {"usart1"}}),
     LibXR::Entry<LibXR::UART>({usart10, {"usart10"}}),
     LibXR::Entry<LibXR::UART>({usart2, {"usart2"}}),
     LibXR::Entry<LibXR::UART>({usart3, {"usart3"}}),
-    LibXR::Entry<LibXR::I2C>({i2c4, {"i2c4"}}),
     LibXR::Entry<LibXR::FDCAN>({fdcan1, {"fdcan1"}}),
     LibXR::Entry<LibXR::FDCAN>({fdcan2, {"fdcan2"}}),
-    LibXR::Entry<LibXR::FDCAN>({fdcan3, {"fdcan3"}})
+    LibXR::Entry<LibXR::FDCAN>({fdcan3, {"fdcan3"}}),
+    LibXR::Entry<LibXR::UART>({usb_otg_hs_cdc, {"usb_otg_hs_cdc"}})
   };
 
   // clang-format on
