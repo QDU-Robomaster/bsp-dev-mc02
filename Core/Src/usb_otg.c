@@ -24,7 +24,7 @@
 #include <string.h>
 /* USER CODE END 0 */
 
-PCD_HandleTypeDef hpcd_USB_OTG_HS __attribute__((section(".axi_ram")));
+PCD_HandleTypeDef hpcd_USB_OTG_HS __attribute__((section(".ram_d1")));
 
 /* USB_OTG_HS init function */
 

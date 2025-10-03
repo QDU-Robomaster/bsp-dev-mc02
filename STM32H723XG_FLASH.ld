@@ -264,13 +264,13 @@ SECTIONS
     . = ALIGN(4);
   } >RAM_D3
 
-  .axi_ram (NOLOAD) :
+  .ram_d1 (NOLOAD) :
   {
     . = ALIGN(4);
     *(.axi_ram)
     *(.axi_ram*)
     . = ALIGN(4);
-  } >RAM
+  } >RAM_D1
 
   /* Remove information from the standard libraries */
   /DISCARD/ :
