@@ -157,6 +157,14 @@ extern "C" void app_main(void) {
   usb_hs.Start();
 
   /* Terminal Configuration */
+  STDIO::read_ = usb_otg_hs_cdc.read_port_;
+  STDIO::write_ = usb_otg_hs_cdc.write_port_;
+
+  RamFS ramfs("XRobot");
+  Terminal<32, 32, 5, 5> terminal(ramfs);
+  auto terminal_task = Timer::CreateTask(terminal.TaskFun, &terminal, 10);
+  Timer::Add(terminal_task);
+  Timer::Start(terminal_task);
 
 
   LibXR::HardwareContainer peripherals{
@@ -191,7 +199,9 @@ extern "C" void app_main(void) {
     LibXR::Entry<LibXR::FDCAN>({fdcan1, {"fdcan1"}}),
     LibXR::Entry<LibXR::FDCAN>({fdcan2, {"fdcan2"}}),
     LibXR::Entry<LibXR::FDCAN>({fdcan3, {"fdcan3"}}),
-    LibXR::Entry<LibXR::UART>({usb_otg_hs_cdc, {"usb_otg_hs_cdc"}})
+    LibXR::Entry<LibXR::UART>({usb_otg_hs_cdc, {"usb_otg_hs_cdc"}}),
+    LibXR::Entry<LibXR::RamFS>({ramfs, {"ramfs"}}),
+    LibXR::Entry<LibXR::Terminal<32, 32, 5, 5>>({terminal, {"terminal"}})
   };
 
   // clang-format on

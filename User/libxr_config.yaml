@@ -1,4 +1,4 @@
-terminal_source: usb_otg_hs
+terminal_source: usb_otg_hs_cdc
 software_timer:
   priority: 2
   stack_depth: 1024
@@ -79,6 +79,7 @@ Terminal:
   max_line_size: 32
   max_arg_number: 5
   max_history_number: 5
+  run_as_thread: false
 SYSTEM: FreeRTOS
 DAC:
   dac1:
@@ -213,6 +214,14 @@ device_aliases:
     type: UART
     aliases:
     - usb_otg_hs_cdc
+  ramfs:
+    type: RamFS
+    aliases:
+    - ramfs
+  terminal:
+    type: Terminal<32, 32, 5, 5>
+    aliases:
+    - terminal
 FlashLayout:
   model: STM32H723VGT6
   flash_base: '0x08000000'
