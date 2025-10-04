@@ -39,14 +39,14 @@ target_sources(${CMAKE_PROJECT_NAME}
 )
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -Og)
-    target_compile_options(xr PRIVATE -O2)
+    target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -O0)
+    target_compile_options(xr PRIVATE -O0)
     if(TARGET FreeRTOS)
-        target_compile_options(FreeRTOS PRIVATE -O2)
+        target_compile_options(FreeRTOS PRIVATE -O0)
     endif()
 
     if(TARGET STM32_Drivers)
-        target_compile_options(STM32_Drivers PRIVATE -O2)
+        target_compile_options(STM32_Drivers PRIVATE -O0)
     endif()
 
     if(TARGET USB_Device_Library)

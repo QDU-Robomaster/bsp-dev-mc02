@@ -49,32 +49,32 @@ extern UART_HandleTypeDef huart5;
 extern UART_HandleTypeDef huart7;
 
 /* DMA Resources */
-static uint16_t adc1_buf[64];
-static uint8_t spi2_tx_buf[32];
-static uint8_t spi2_rx_buf[32];
-static uint8_t spi6_tx_buf[32];
-static uint8_t uart5_rx_buf[128];
-static uint8_t uart7_tx_buf[128];
-static uint8_t uart7_rx_buf[128];
-static uint8_t usart1_tx_buf[128];
-static uint8_t usart1_rx_buf[128];
-static uint8_t usart10_tx_buf[128];
-static uint8_t usart10_rx_buf[128];
-static uint8_t usart2_tx_buf[128];
-static uint8_t usart2_rx_buf[128];
-static uint8_t usart3_tx_buf[128];
-static uint8_t usart3_rx_buf[128];
-static uint8_t usb_otg_hs_ep0_in_buf[8];
-static uint8_t usb_otg_hs_ep0_out_buf[8];
-static uint8_t usb_otg_hs_ep1_in_buf[128];
-static uint8_t usb_otg_hs_ep1_out_buf[128];
-static uint8_t usb_otg_hs_ep2_in_buf[16];
+static uint16_t adc1_buf[64] __attribute__((section(".axi_ram")));
+static uint8_t spi2_tx_buf[32] __attribute__((section(".axi_ram")));
+static uint8_t spi2_rx_buf[32] __attribute__((section(".axi_ram")));
+static uint8_t spi6_tx_buf[32] __attribute__((section(".ram_d3")));
+static uint8_t uart5_rx_buf[128] __attribute__((section(".axi_ram")));
+static uint8_t uart7_tx_buf[128] __attribute__((section(".axi_ram")));
+static uint8_t uart7_rx_buf[128] __attribute__((section(".axi_ram")));
+static uint8_t usart1_tx_buf[128] __attribute__((section(".axi_ram")));
+static uint8_t usart1_rx_buf[128] __attribute__((section(".axi_ram")));
+static uint8_t usart10_tx_buf[128] __attribute__((section(".axi_ram")));
+static uint8_t usart10_rx_buf[128] __attribute__((section(".axi_ram")));
+static uint8_t usart2_tx_buf[128] __attribute__((section(".axi_ram")));
+static uint8_t usart2_rx_buf[128] __attribute__((section(".axi_ram")));
+static uint8_t usart3_tx_buf[128] __attribute__((section(".axi_ram")));
+static uint8_t usart3_rx_buf[128] __attribute__((section(".axi_ram")));
+static uint8_t usb_otg_hs_ep0_in_buf[8] __attribute__((section(".axi_ram")));
+static uint8_t usb_otg_hs_ep0_out_buf[8] __attribute__((section(".axi_ram")));
+static uint8_t usb_otg_hs_ep1_in_buf[128] __attribute__((section(".axi_ram")));
+static uint8_t usb_otg_hs_ep1_out_buf[128] __attribute__((section(".axi_ram")));
+static uint8_t usb_otg_hs_ep2_in_buf[16] __attribute__((section(".axi_ram")));
 
 extern "C" void app_main(void) {
   // clang-format on
   // NOLINTEND
   /* User Code Begin 2 */
-  
+
   /* User Code End 2 */
   // clang-format off
   // NOLINTBEGIN
@@ -162,9 +162,9 @@ extern "C" void app_main(void) {
 
   RamFS ramfs("XRobot");
   Terminal<32, 32, 5, 5> terminal(ramfs);
-  auto terminal_task = Timer::CreateTask(terminal.TaskFun, &terminal, 10);
-  Timer::Add(terminal_task);
-  Timer::Start(terminal_task);
+  LibXR::Thread term_thread;
+  term_thread.Create(&terminal, terminal.ThreadFun, "terminal", 2048,
+                     static_cast<LibXR::Thread::Priority>(2));
 
 
   LibXR::HardwareContainer peripherals{
@@ -208,7 +208,12 @@ extern "C" void app_main(void) {
   // NOLINTEND
   /* User Code Begin 3 */
   STM32Flash flash(FLASH_SECTORS, FLASH_SECTOR_NUMBER);
-  LibXR::DatabaseRaw<32> database(flash, 5);
+  LibXR::DatabaseRaw<32> database(flash);
+
+  LibXR::Database::Key<int> key(database,"counter", 0);
+
+  key.Set(key.data_ + 1);
+  key.Load();
 
   peripherals.Register(LibXR::Entry<LibXR::Database>{database, {"database"}});
 

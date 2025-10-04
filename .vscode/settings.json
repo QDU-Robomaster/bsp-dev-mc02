@@ -18,9 +18,9 @@
     "editor.suggest.showStatusBar": true,
     "editor.inlayHints.enabled": "offUnlessPressed",
     "cmake.options.statusBarVisibility": "icon",
-    "cmake.parallelJobs": 8,
+    "cmake.parallelJobs": 16,
     "cmake.ctest.allowParallelJobs": true,
-    "cmake.ctest.parallelJobs": 8,
+    "cmake.ctest.parallelJobs": 16,
     "cmake.cmakePath": "cube-cmake",
     "cmake.configureArgs": [
         "-DCMAKE_COMMAND=cube-cmake"
