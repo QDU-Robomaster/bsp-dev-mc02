@@ -6,7 +6,7 @@ SPI:
   spi2:
     tx_buffer_size: 32
     rx_buffer_size: 32
-    dma_section: ''
+    dma_section: .axi_ram
     dma_enable_min_size: 3
   spi6:
     tx_buffer_size: 32
@@ -22,32 +22,32 @@ USART:
   uart7:
     tx_buffer_size: 128
     rx_buffer_size: 128
-    dma_section: ''
+    dma_section: .axi_ram
     tx_queue_size: 5
   usart1:
     tx_buffer_size: 128
     rx_buffer_size: 128
-    dma_section: ''
+    dma_section: .axi_ram
     tx_queue_size: 5
   usart10:
     tx_buffer_size: 128
     rx_buffer_size: 128
-    dma_section: ''
+    dma_section: .axi_ram
     tx_queue_size: 5
   usart2:
     tx_buffer_size: 128
     rx_buffer_size: 128
-    dma_section: ''
+    dma_section: .axi_ram
     tx_queue_size: 5
   usart3:
     tx_buffer_size: 128
     rx_buffer_size: 128
-    dma_section: ''
+    dma_section: .axi_ram
     tx_queue_size: 5
 ADC:
   adc1:
     buffer_size: 128
-    dma_section: ''
+    dma_section: .axi_ram
     vref: 3.3
 FDCAN:
   FDCAN1:
