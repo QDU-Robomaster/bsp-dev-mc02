@@ -207,6 +207,11 @@ extern "C" void app_main(void) {
   // clang-format on
   // NOLINTEND
   /* User Code Begin 3 */
+  STM32Flash flash(FLASH_SECTORS, FLASH_SECTOR_NUMBER);
+  LibXR::DatabaseRaw<32> database(flash, 5);
+
+  peripherals.Register(LibXR::Entry<LibXR::Database>{database, {"database"}});
+
   XRobotMain(peripherals);
   /* User Code End 3 */
 }

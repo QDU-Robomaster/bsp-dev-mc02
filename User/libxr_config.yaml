@@ -85,6 +85,35 @@ DAC:
   dac1:
     init_voltage: 0.0
     vref: 3.3
+FlashLayout:
+  model: STM32H723VGT6
+  flash_base: '0x08000000'
+  flash_size_kb: 1024
+  sectors:
+  - index: 0
+    address: '0x08000000'
+    size_kb: 128.0
+  - index: 1
+    address: '0x08020000'
+    size_kb: 128.0
+  - index: 2
+    address: '0x08040000'
+    size_kb: 128.0
+  - index: 3
+    address: '0x08060000'
+    size_kb: 128.0
+  - index: 4
+    address: '0x08080000'
+    size_kb: 128.0
+  - index: 5
+    address: '0x080A0000'
+    size_kb: 128.0
+  - index: 6
+    address: '0x080C0000'
+    size_kb: 128.0
+  - index: 7
+    address: '0x080E0000'
+    size_kb: 128.0
 device_aliases:
   power_manager:
     type: PowerManager
@@ -222,32 +251,3 @@ device_aliases:
     type: Terminal<32, 32, 5, 5>
     aliases:
     - terminal
-FlashLayout:
-  model: STM32H723VGT6
-  flash_base: '0x08000000'
-  flash_size_kb: 1024
-  sectors:
-  - index: 0
-    address: '0x08000000'
-    size_kb: 128.0
-  - index: 1
-    address: '0x08020000'
-    size_kb: 128.0
-  - index: 2
-    address: '0x08040000'
-    size_kb: 128.0
-  - index: 3
-    address: '0x08060000'
-    size_kb: 128.0
-  - index: 4
-    address: '0x08080000'
-    size_kb: 128.0
-  - index: 5
-    address: '0x080A0000'
-    size_kb: 128.0
-  - index: 6
-    address: '0x080C0000'
-    size_kb: 128.0
-  - index: 7
-    address: '0x080E0000'
-    size_kb: 128.0
