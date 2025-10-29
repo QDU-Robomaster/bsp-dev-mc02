@@ -83,6 +83,7 @@ extern "C" void app_main(void) {
   STM32PowerManager power_manager;
 
   /* GPIO Configuration */
+  STM32GPIO PA15(GPIOA, GPIO_PIN_15);
   STM32GPIO LCD_BLK(LCD_BLK_GPIO_Port, LCD_BLK_Pin);
   STM32GPIO LCD_RES(LCD_RES_GPIO_Port, LCD_RES_Pin);
   STM32GPIO ACC_CS(ACC_CS_GPIO_Port, ACC_CS_Pin);
@@ -201,7 +202,8 @@ extern "C" void app_main(void) {
     LibXR::Entry<LibXR::FDCAN>({fdcan3, {"fdcan3"}}),
     LibXR::Entry<LibXR::UART>({usb_otg_hs_cdc, {"usb_otg_hs_cdc"}}),
     LibXR::Entry<LibXR::RamFS>({ramfs, {"ramfs"}}),
-    LibXR::Entry<LibXR::Terminal<32, 32, 5, 5>>({terminal, {"terminal"}})
+    LibXR::Entry<LibXR::Terminal<32, 32, 5, 5>>({terminal, {"terminal"}}),
+    LibXR::Entry<LibXR::GPIO>({PA15, {"PA15"}})
   };
 
   // clang-format on

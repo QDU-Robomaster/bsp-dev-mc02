@@ -253,3 +253,7 @@ device_aliases:
     type: Terminal<32, 32, 5, 5>
     aliases:
     - terminal
+  PA15:
+    type: GPIO
+    aliases:
+    - PA15
