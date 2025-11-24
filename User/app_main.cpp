@@ -49,7 +49,7 @@ extern UART_HandleTypeDef huart5;
 extern UART_HandleTypeDef huart7;
 
 /* DMA Resources */
-static uint16_t adc1_buf[64] __attribute__((section(".axi_ram")));
+static uint16_t adc1_buf[128] __attribute__((section(".axi_ram")));
 static uint8_t spi2_tx_buf[32] __attribute__((section(".axi_ram")));
 static uint8_t spi2_rx_buf[32] __attribute__((section(".axi_ram")));
 static uint8_t spi6_tx_buf[32] __attribute__((section(".ram_d3")));
@@ -141,7 +141,7 @@ extern "C" void app_main(void) {
 
   STM32CANFD fdcan3(&hfdcan3, 5);
 
-  static constexpr auto USB_OTG_HS_LANG_PACK = LibXR::USB::DescriptorStrings::MakeLanguagePack(LibXR::USB::DescriptorStrings::Language::EN_US, "XRobot", "STM32 XRUSB USB_OTG_HS CDC Demo", "123456789");
+  static constexpr auto USB_OTG_HS_LANG_PACK = LibXR::USB::DescriptorStrings::MakeLanguagePack(LibXR::USB::DescriptorStrings::Language::EN_US, "QDU-Future", "MainCtrl", "QDU-Future-MainCtrl-89ABCDEF0123456701234567");
   LibXR::USB::CDCUart usb_otg_hs_cdc(128, 128, 3);
 
   STM32USBDeviceOtgHS usb_hs(
@@ -150,9 +150,10 @@ extern "C" void app_main(void) {
       {usb_otg_hs_ep0_out_buf, usb_otg_hs_ep1_out_buf},
       {{usb_otg_hs_ep0_in_buf, 8}, {usb_otg_hs_ep1_in_buf, 128}, {usb_otg_hs_ep2_in_buf, 16}},
       USB::DeviceDescriptor::PacketSize0::SIZE_8,
-      0x483, 0x5740, 0xF407,
+      0x16D0, 0x1492, 0xF407,
       {&USB_OTG_HS_LANG_PACK},
-      {{&usb_otg_hs_cdc}}
+      {{&usb_otg_hs_cdc}},
+      {reinterpret_cast<void *>(UID_BASE), 12}
   );
   usb_hs.Init();
   usb_hs.Start();
