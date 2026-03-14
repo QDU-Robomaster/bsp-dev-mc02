@@ -74,7 +74,7 @@ extern "C" void app_main(void) {
   // clang-format on
   // NOLINTEND
   /* User Code Begin 2 */
-  
+
   /* User Code End 2 */
   // clang-format off
   // NOLINTBEGIN
@@ -155,8 +155,8 @@ extern "C" void app_main(void) {
       {{&usb_otg_hs_cdc}},
       {reinterpret_cast<void *>(UID_BASE), 12}
   );
-  usb_hs.Init();
-  usb_hs.Start();
+  usb_hs.Init(false);
+  usb_hs.Start(false);
 
   /* Terminal Configuration */
   STDIO::read_ = usb_otg_hs_cdc.read_port_;
@@ -213,13 +213,7 @@ extern "C" void app_main(void) {
   STM32Flash flash(FLASH_SECTORS, FLASH_SECTOR_NUMBER);
   LibXR::DatabaseRaw<32> database(flash);
 
-  LibXR::Database::Key<int> key(database,"counter", 0);
-
-  key.Set(key.data_ + 1);
-  key.Load();
-
   peripherals.Register(LibXR::Entry<LibXR::Database>{database, {"database"}});
-
   XRobotMain(peripherals);
   /* User Code End 3 */
 }
