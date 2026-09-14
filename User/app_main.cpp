@@ -142,7 +142,7 @@ extern "C" void app_main(void) {
   STM32CANFD fdcan3(&hfdcan3, 5);
 
   static constexpr auto USB_OTG_HS_LANG_PACK = LibXR::USB::DescriptorStrings::MakeLanguagePack(LibXR::USB::DescriptorStrings::Language::EN_US, "QDU-Future", "MainCtrl", "QDU-Future-MainCtrl-89ABCDEF0123456701234567");
-  LibXR::USB::CDCUart usb_otg_hs_cdc(128, 128, 3);
+  LibXR::USB::CDCUart usb_otg_hs_cdc(LibXR::USB::Endpoint::EPNumber::EP1, LibXR::USB::Endpoint::EPNumber::EP1, LibXR::USB::Endpoint::EPNumber::EP2, 128, 128, 3);
 
   STM32USBDeviceOtgHS usb_hs(
       &hpcd_USB_OTG_HS,

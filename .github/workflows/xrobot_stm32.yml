@@ -21,7 +21,7 @@ jobs:
     - name: install pip packages
       run: pip install libxr xrobot
     - name: config libxr
-      run: xr_cubemx_cfg -d ./ --xrobot
+      run: xr_cubemx_cfg -d ./ --xrobot --commit "$(git rev-parse HEAD:Middlewares/Third_Party/LibXR)"
     - name: config xrobot module
       run: xrobot_src_man create-sources && xrobot_init_mod --config https://raw.githubusercontent.com/QDU-Robomaster/dev-c-robots/refs/heads/main/test.yaml --dir ./Modules
     - name: xrobot generate code
