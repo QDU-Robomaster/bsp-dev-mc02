@@ -19,7 +19,7 @@ jobs:
     - name: init submodule
       run: git config --global --add safe.directory "$GITHUB_WORKSPACE" && git submodule update --init --recursive
     - name: install pip packages
-      run: pip install libxr xrobot
+      run: pip install git+https://github.com/xrobot-org/LibXR_CppCodeGenerator.git@dev xrobot
     - name: config libxr
       run: xr_cubemx_cfg -d ./ --xrobot --commit "$(git rev-parse HEAD:Middlewares/Third_Party/LibXR)"
     - name: config xrobot module
