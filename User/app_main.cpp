@@ -18,7 +18,6 @@
 #include "stm32_usb_dev.hpp"
 #include "stm32_watchdog.hpp"
 #include "flash_map.hpp"
-#include "app_framework.hpp"
 #include "xrobot_main.hpp"
 
 using namespace LibXR;
@@ -234,7 +233,6 @@ extern "C" void app_main(void) {
   // clang-format on
   // NOLINTEND
   /* User Code Begin 2 */
-
   /* User Code End 2 */
   // clang-format off
   // NOLINTBEGIN
@@ -248,17 +246,18 @@ extern "C" void app_main(void) {
   STM32GPIO LCD_RES(LCD_RES_GPIO_Port, LCD_RES_Pin);
   STM32GPIO ACC_CS(ACC_CS_GPIO_Port, ACC_CS_Pin);
   STM32GPIO POWER_24V_2(POWER_24V_2_GPIO_Port, POWER_24V_2_Pin);
-  STM32GPIO PC14_OSC32_IN(GPIOC, GPIO_PIN_14);
+  STM32GPIO PC14(GPIOC, GPIO_PIN_14);
   STM32GPIO POWER_5V(POWER_5V_GPIO_Port, POWER_5V_Pin);
+  STM32GPIO GYRO_CS(GYRO_CS_GPIO_Port, GYRO_CS_Pin);
   STM32GPIO ACC_INT(ACC_INT_GPIO_Port, ACC_INT_Pin, EXTI15_10_IRQn);
   STM32GPIO W25Q64_CS(W25Q64_CS_GPIO_Port, W25Q64_CS_Pin);
   STM32GPIO GYRO_INT(GYRO_INT_GPIO_Port, GYRO_INT_Pin, EXTI15_10_IRQn);
   STM32GPIO LCD_CS(LCD_CS_GPIO_Port, LCD_CS_Pin);
 
   STM32ADC adc1(&hadc1, adc1_buf, {ADC_CHANNEL_4, ADC_CHANNEL_19}, 3.3);
-  auto adc1_adc_channel_4 = adc1.GetChannel(0);
+  auto& adc1_adc_channel_4 = adc1.GetChannel(0);
   UNUSED(adc1_adc_channel_4);
-  auto adc1_adc_channel_19 = adc1.GetChannel(1);
+  auto& adc1_adc_channel_19 = adc1.GetChannel(1);
   UNUSED(adc1_adc_channel_19);
 
   STM32PWM pwm_tim1_ch1(&htim1, TIM_CHANNEL_1, false);
@@ -328,44 +327,42 @@ extern "C" void app_main(void) {
   term_thread.Create(&terminal, terminal.ThreadFun, "terminal", 2048,
                      static_cast<LibXR::Thread::Priority>(2));
 
-
-  LibXR::HardwareContainer peripherals{
-    LibXR::Entry<LibXR::PowerManager>({power_manager, {"power_manager"}}),
-    LibXR::Entry<LibXR::GPIO>({LCD_BLK, {"LCD_BLK"}}),
-    LibXR::Entry<LibXR::GPIO>({LCD_RES, {"LCD_RES"}}),
-    LibXR::Entry<LibXR::GPIO>({ACC_CS, {"ACC_CS"}}),
-    LibXR::Entry<LibXR::GPIO>({POWER_24V_2, {"POWER_24V_2"}}),
-    LibXR::Entry<LibXR::GPIO>({PC14_OSC32_IN, {"PC14_OSC32_IN"}}),
-    LibXR::Entry<LibXR::GPIO>({POWER_5V, {"POWER_5V"}}),
-    LibXR::Entry<LibXR::GPIO>({ACC_INT, {"ACC_INT"}}),
-    LibXR::Entry<LibXR::GPIO>({W25Q64_CS, {"W25Q64_CS"}}),
-    LibXR::Entry<LibXR::GPIO>({GYRO_INT, {"GYRO_INT"}}),
-    LibXR::Entry<LibXR::GPIO>({LCD_CS, {"LCD_CS"}}),
-    LibXR::Entry<LibXR::PWM>({pwm_tim1_ch1, {"pwm_tim1_ch1"}}),
-    LibXR::Entry<LibXR::PWM>({pwm_tim1_ch3, {"pwm_tim1_ch3"}}),
-    LibXR::Entry<LibXR::PWM>({pwm_tim12_ch2, {"pwm_tim12_ch2"}}),
-    LibXR::Entry<LibXR::PWM>({pwm_tim2_ch1, {"pwm_tim2_ch1"}}),
-    LibXR::Entry<LibXR::PWM>({pwm_tim2_ch3, {"pwm_tim2_ch3"}}),
-    LibXR::Entry<LibXR::PWM>({pwm_tim3_ch4, {"pwm_tim3_ch4"}}),
-    LibXR::Entry<LibXR::ADC>({adc1_adc_channel_4, {"adc1_adc_channel_4"}}),
-    LibXR::Entry<LibXR::ADC>({adc1_adc_channel_19, {"adc1_adc_channel_19"}}),
-    LibXR::Entry<LibXR::DAC>({dac1_out2, {"dac1_out2"}}),
-    LibXR::Entry<LibXR::SPI>({spi2, {"spi2"}}),
-    LibXR::Entry<LibXR::SPI>({spi6, {"spi6"}}),
-    LibXR::Entry<LibXR::UART>({uart5, {"uart5"}}),
-    LibXR::Entry<LibXR::UART>({uart7, {"uart7"}}),
-    LibXR::Entry<LibXR::UART>({usart1, {"usart1"}}),
-    LibXR::Entry<LibXR::UART>({usart10, {"usart10"}}),
-    LibXR::Entry<LibXR::UART>({usart2, {"usart2"}}),
-    LibXR::Entry<LibXR::UART>({usart3, {"usart3"}}),
-    LibXR::Entry<LibXR::FDCAN>({fdcan1, {"fdcan1"}}),
-    LibXR::Entry<LibXR::FDCAN>({fdcan2, {"fdcan2"}}),
-    LibXR::Entry<LibXR::FDCAN>({fdcan3, {"fdcan3"}}),
-    LibXR::Entry<LibXR::UART>({usb_otg_hs_cdc, {"usb_otg_hs_cdc"}}),
-    LibXR::Entry<LibXR::RamFS>({ramfs, {"ramfs"}}),
-    LibXR::Entry<LibXR::Terminal<32, 32, 5, 5>>({terminal, {"terminal"}}),
-    LibXR::Entry<LibXR::GPIO>({PA15, {"PA15"}})
-  };
+  XR_REGISTER(power_manager, LibXR::PowerManager);
+  XR_REGISTER(LCD_BLK, LibXR::GPIO);
+  XR_REGISTER(LCD_RES, LibXR::GPIO);
+  XR_REGISTER(ACC_CS, LibXR::GPIO);
+  XR_REGISTER(POWER_24V_2, LibXR::GPIO);
+  XR_REGISTER(POWER_5V, LibXR::GPIO);
+  XR_REGISTER(ACC_INT, LibXR::GPIO);
+  XR_REGISTER(W25Q64_CS, LibXR::GPIO);
+  XR_REGISTER(GYRO_INT, LibXR::GPIO);
+  XR_REGISTER(LCD_CS, LibXR::GPIO);
+  XR_REGISTER(pwm_tim1_ch1, LibXR::PWM);
+  XR_REGISTER(pwm_tim1_ch3, LibXR::PWM);
+  XR_REGISTER(pwm_tim12_ch2, LibXR::PWM);
+  XR_REGISTER(pwm_tim2_ch1, LibXR::PWM);
+  XR_REGISTER(pwm_tim2_ch3, LibXR::PWM);
+  XR_REGISTER(pwm_tim3_ch4, LibXR::PWM);
+  XR_REGISTER(adc1_adc_channel_4, LibXR::ADC);
+  XR_REGISTER(adc1_adc_channel_19, LibXR::ADC);
+  XR_REGISTER(dac1_out2, LibXR::DAC);
+  XR_REGISTER(spi2, LibXR::SPI);
+  XR_REGISTER(spi6, LibXR::SPI);
+  XR_REGISTER(uart5, LibXR::UART);
+  XR_REGISTER(uart7, LibXR::UART);
+  XR_REGISTER(usart1, LibXR::UART);
+  XR_REGISTER(usart10, LibXR::UART);
+  XR_REGISTER(usart2, LibXR::UART);
+  XR_REGISTER(usart3, LibXR::UART);
+  XR_REGISTER(fdcan1, LibXR::FDCAN);
+  XR_REGISTER(fdcan2, LibXR::FDCAN);
+  XR_REGISTER(fdcan3, LibXR::FDCAN);
+  XR_REGISTER(usb_otg_hs_cdc, LibXR::UART);
+  XR_REGISTER(ramfs, LibXR::RamFS);
+  XR_REGISTER(terminal, LibXR::Terminal<32, 32, 5, 5>);
+  XR_REGISTER(PA15, LibXR::GPIO);
+  XR_REGISTER(PC14, LibXR::GPIO);
+  XR_REGISTER(GYRO_CS, LibXR::GPIO);
 
   // clang-format on
   // NOLINTEND
@@ -373,7 +370,7 @@ extern "C" void app_main(void) {
   STM32Flash flash(FLASH_SECTORS, FLASH_SECTOR_NUMBER);
   LibXR::DatabaseRaw<32> database(flash);
 
-  peripherals.Register(LibXR::Entry<LibXR::Database>{database, {"database"}});
-  XRobotMain(peripherals);
+  XR_REGISTER(database, LibXR::Database);
+  XROBOT_MAIN();
   /* User Code End 3 */
 }

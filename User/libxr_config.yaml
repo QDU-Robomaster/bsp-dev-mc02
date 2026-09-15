@@ -74,6 +74,7 @@ USB:
     manufacturer: QDU-Future
     product: MainCtrl
     serial: QDU-Future-MainCtrl-89ABCDEF0123456701234567
+    cdc_count: 1
 Terminal:
   read_buff_size: 32
   max_line_size: 32
@@ -137,10 +138,6 @@ device_aliases:
     type: GPIO
     aliases:
     - POWER_24V_2
-  PC14_OSC32_IN:
-    type: GPIO
-    aliases:
-    - PC14_OSC32_IN
   POWER_5V:
     type: GPIO
     aliases:
@@ -257,3 +254,12 @@ device_aliases:
     type: GPIO
     aliases:
     - PA15
+  PC14:
+    type: GPIO
+    aliases:
+    - PC14
+    - PC14_OSC32_IN
+  GYRO_CS:
+    type: GPIO
+    aliases:
+    - GYRO_CS

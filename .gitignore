@@ -8,6 +8,6 @@ cmake_install.cmake
 compile_commands.json
 .cache/**
 build/**
-Modules/**
+Modules/*/
 DevMC02.jdebug.user
 .config.json
