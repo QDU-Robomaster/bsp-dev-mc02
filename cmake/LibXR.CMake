@@ -1,15 +1,19 @@
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # LibXR
 set(LIBXR_SYSTEM FreeRTOS)
 set(LIBXR_DRIVER st)
 set(XROBOT_MODULES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Modules)
-add_subdirectory(Middlewares/Third_Party/LibXR)
+set(LIBXR_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Middlewares/Third_Party/LibXR"
+    CACHE PATH "Existing LibXR source checkout")
+add_subdirectory("${LIBXR_SOURCE_DIR}" "${CMAKE_CURRENT_BINARY_DIR}/LibXR")
 target_link_libraries(xr
     PUBLIC stm32cubemx
 )
 
+
+target_compile_features(xr PUBLIC cxx_std_20)
 target_include_directories(xr
     PUBLIC $<TARGET_PROPERTY:stm32cubemx,INTERFACE_INCLUDE_DIRECTORIES>
     PUBLIC Core/Inc
@@ -17,6 +21,11 @@ target_include_directories(xr
 )
 
 # Add include paths
+set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
+    CXX_STANDARD 20
+    CXX_STANDARD_REQUIRED ON
+)
+
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined include paths
     PUBLIC $<TARGET_PROPERTY:xr,INTERFACE_INCLUDE_DIRECTORIES>
