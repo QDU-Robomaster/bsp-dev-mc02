@@ -236,74 +236,74 @@ extern "C" void app_main(void) {
   /* User Code End 2 */
   // clang-format off
   // NOLINTBEGIN
-  STM32TimerTimebase timebase(&htim4);
+  static STM32TimerTimebase timebase(&htim4);
   PlatformInit(2, 1024);
-  STM32PowerManager power_manager;
+  static STM32PowerManager power_manager;
 
   /* GPIO Configuration */
-  STM32GPIO PA15(GPIOA, GPIO_PIN_15);
-  STM32GPIO LCD_BLK(LCD_BLK_GPIO_Port, LCD_BLK_Pin);
-  STM32GPIO LCD_RES(LCD_RES_GPIO_Port, LCD_RES_Pin);
-  STM32GPIO ACC_CS(ACC_CS_GPIO_Port, ACC_CS_Pin);
-  STM32GPIO POWER_24V_2(POWER_24V_2_GPIO_Port, POWER_24V_2_Pin);
-  STM32GPIO PC14(GPIOC, GPIO_PIN_14);
-  STM32GPIO POWER_5V(POWER_5V_GPIO_Port, POWER_5V_Pin);
-  STM32GPIO GYRO_CS(GYRO_CS_GPIO_Port, GYRO_CS_Pin);
-  STM32GPIO ACC_INT(ACC_INT_GPIO_Port, ACC_INT_Pin, EXTI15_10_IRQn);
-  STM32GPIO W25Q64_CS(W25Q64_CS_GPIO_Port, W25Q64_CS_Pin);
-  STM32GPIO GYRO_INT(GYRO_INT_GPIO_Port, GYRO_INT_Pin, EXTI15_10_IRQn);
-  STM32GPIO LCD_CS(LCD_CS_GPIO_Port, LCD_CS_Pin);
+  static STM32GPIO PA15(GPIOA, GPIO_PIN_15);
+  static STM32GPIO LCD_BLK(LCD_BLK_GPIO_Port, LCD_BLK_Pin);
+  static STM32GPIO LCD_RES(LCD_RES_GPIO_Port, LCD_RES_Pin);
+  static STM32GPIO ACC_CS(ACC_CS_GPIO_Port, ACC_CS_Pin);
+  static STM32GPIO POWER_24V_2(POWER_24V_2_GPIO_Port, POWER_24V_2_Pin);
+  static STM32GPIO PC14(GPIOC, GPIO_PIN_14);
+  static STM32GPIO POWER_5V(POWER_5V_GPIO_Port, POWER_5V_Pin);
+  static STM32GPIO GYRO_CS(GYRO_CS_GPIO_Port, GYRO_CS_Pin);
+  static STM32GPIO ACC_INT(ACC_INT_GPIO_Port, ACC_INT_Pin, EXTI15_10_IRQn);
+  static STM32GPIO W25Q64_CS(W25Q64_CS_GPIO_Port, W25Q64_CS_Pin);
+  static STM32GPIO GYRO_INT(GYRO_INT_GPIO_Port, GYRO_INT_Pin, EXTI15_10_IRQn);
+  static STM32GPIO LCD_CS(LCD_CS_GPIO_Port, LCD_CS_Pin);
 
-  STM32ADC adc1(&hadc1, adc1_buf, {ADC_CHANNEL_4, ADC_CHANNEL_19}, 3.3);
-  auto& adc1_adc_channel_4 = adc1.GetChannel(0);
+  static STM32ADC adc1(&hadc1, adc1_buf, {ADC_CHANNEL_4, ADC_CHANNEL_19}, 3.3);
+  static auto& adc1_adc_channel_4 = adc1.GetChannel(0);
   UNUSED(adc1_adc_channel_4);
-  auto& adc1_adc_channel_19 = adc1.GetChannel(1);
+  static auto& adc1_adc_channel_19 = adc1.GetChannel(1);
   UNUSED(adc1_adc_channel_19);
 
-  STM32PWM pwm_tim1_ch1(&htim1, TIM_CHANNEL_1, false);
-  STM32PWM pwm_tim1_ch3(&htim1, TIM_CHANNEL_3, false);
+  static STM32PWM pwm_tim1_ch1(&htim1, TIM_CHANNEL_1, false);
+  static STM32PWM pwm_tim1_ch3(&htim1, TIM_CHANNEL_3, false);
 
-  STM32PWM pwm_tim12_ch2(&htim12, TIM_CHANNEL_2, false);
+  static STM32PWM pwm_tim12_ch2(&htim12, TIM_CHANNEL_2, false);
 
-  STM32PWM pwm_tim2_ch1(&htim2, TIM_CHANNEL_1, false);
-  STM32PWM pwm_tim2_ch3(&htim2, TIM_CHANNEL_3, false);
+  static STM32PWM pwm_tim2_ch1(&htim2, TIM_CHANNEL_1, false);
+  static STM32PWM pwm_tim2_ch3(&htim2, TIM_CHANNEL_3, false);
 
-  STM32PWM pwm_tim3_ch4(&htim3, TIM_CHANNEL_4, false);
+  static STM32PWM pwm_tim3_ch4(&htim3, TIM_CHANNEL_4, false);
 
-  STM32DAC dac1_out2(&hdac1, DAC_CHANNEL_2, 0.0, 3.3);
+  static STM32DAC dac1_out2(&hdac1, DAC_CHANNEL_2, 0.0, 3.3);
 
-  STM32SPI spi2(&hspi2, spi2_rx_buf, spi2_tx_buf, 3);
+  static STM32SPI spi2(&hspi2, spi2_rx_buf, spi2_tx_buf, 3);
 
-  STM32SPI spi6(&hspi6, {nullptr, 0}, spi6_tx_buf, 3);
+  static STM32SPI spi6(&hspi6, {nullptr, 0}, spi6_tx_buf, 3);
 
-  STM32UART uart5(&huart5,
+  static STM32UART uart5(&huart5,
               uart5_rx_buf, {nullptr, 0}, 5);
 
-  STM32UART uart7(&huart7,
+  static STM32UART uart7(&huart7,
               uart7_rx_buf, uart7_tx_buf, 5);
 
-  STM32UART usart1(&huart1,
+  static STM32UART usart1(&huart1,
               usart1_rx_buf, usart1_tx_buf, 5);
 
-  STM32UART usart10(&huart10,
+  static STM32UART usart10(&huart10,
               usart10_rx_buf, usart10_tx_buf, 5);
 
-  STM32UART usart2(&huart2,
+  static STM32UART usart2(&huart2,
               usart2_rx_buf, usart2_tx_buf, 5);
 
-  STM32UART usart3(&huart3,
+  static STM32UART usart3(&huart3,
               usart3_rx_buf, usart3_tx_buf, 5);
 
-  STM32CANFD fdcan1(&hfdcan1, 5);
+  static STM32CANFD fdcan1(&hfdcan1, 5);
 
-  STM32CANFD fdcan2(&hfdcan2, 5);
+  static STM32CANFD fdcan2(&hfdcan2, 5);
 
-  STM32CANFD fdcan3(&hfdcan3, 5);
+  static STM32CANFD fdcan3(&hfdcan3, 5);
 
   static constexpr auto USB_OTG_HS_LANG_PACK = LibXR::USB::DescriptorStrings::MakeLanguagePack(LibXR::USB::DescriptorStrings::Language::EN_US, "QDU-Future", "MainCtrl", "QDU-Future-MainCtrl-89ABCDEF0123456701234567");
-  LibXR::USB::CDCUart usb_otg_hs_cdc(LibXR::USB::Endpoint::EPNumber::EP1, LibXR::USB::Endpoint::EPNumber::EP1, LibXR::USB::Endpoint::EPNumber::EP2, 128, 128, 3);
+  static LibXR::USB::CDCUart usb_otg_hs_cdc(LibXR::USB::Endpoint::EPNumber::EP1, LibXR::USB::Endpoint::EPNumber::EP1, LibXR::USB::Endpoint::EPNumber::EP2, 128, 128, 3);
 
-  STM32USBDeviceOtgHS usb_hs(
+  static STM32USBDeviceOtgHS usb_hs(
       &hpcd_USB_OTG_HS,
       256,
       {usb_otg_hs_ep0_out_buf, usb_otg_hs_ep1_out_buf},
@@ -321,9 +321,9 @@ extern "C" void app_main(void) {
   STDIO::read_ = usb_otg_hs_cdc.read_port_;
   STDIO::write_ = usb_otg_hs_cdc.write_port_;
 
-  RamFS ramfs("XRobot");
-  Terminal<32, 32, 5, 5> terminal(ramfs);
-  LibXR::Thread term_thread;
+  static RamFS ramfs("XRobot");
+  static Terminal<32, 32, 5, 5> terminal(ramfs);
+  static LibXR::Thread term_thread;
   term_thread.Create(&terminal, terminal.ThreadFun, "terminal", 2048,
                      static_cast<LibXR::Thread::Priority>(2));
 
@@ -367,8 +367,8 @@ extern "C" void app_main(void) {
   // clang-format on
   // NOLINTEND
   /* User Code Begin 3 */
-  STM32Flash flash(FLASH_SECTORS, FLASH_SECTOR_NUMBER);
-  LibXR::DatabaseRaw<32> database(flash);
+  static STM32Flash flash(FLASH_SECTORS, FLASH_SECTOR_NUMBER);
+  static LibXR::DatabaseRaw<32> database(flash);
 
   XR_REGISTER(database, LibXR::Database);
   XROBOT_MAIN();

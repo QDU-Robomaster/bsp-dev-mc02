@@ -2,9 +2,9 @@ modules:
 - module: xrobot-org/BuzzerAlarm
   id: buzzer
   args:
-  - pwm_tim12_ch2
-  - '1500'
-  - '300'
-  - '300'
+  - pwm: pwm_tim12_ch2
+  - alarm_freq: '1500'
+  - alarm_duration: '300'
+  - alarm_delay: '300'
 settings:
-  monitor_sleep_ms: 1000
+  monitor_sleep_ms: '1000'

@@ -1,16 +1,18 @@
 version: 1
 requests:
 - id: xrobot-org/BuzzerAlarm
-  ref: refs/heads/feat/static-assembly-20260915
+  ref: same-or-dev
 modules:
   xrobot-org/BuzzerAlarm:
     repo: https://github.com/xrobot-org/BuzzerAlarm.git
     source: https://xrobot.work/xrobot-modules/index.yaml
-    requested: refs/heads/feat/static-assembly-20260915
+    requested: same-or-dev
     resolved_ref: feat/static-assembly-20260915
     ref_kind: branch
     context:
     - branch
     - feat/static-assembly-20260915
-    commit: 7ef516e442d7810488341c809ae6938aa7f22426
-    directory: xrobot-org/BuzzerAlarm
+    commit: 6e73d640b4ad773184c3d5db5bcb0d29ebe439a8
+root_context:
+- branch
+- feat/static-assembly-20260915
