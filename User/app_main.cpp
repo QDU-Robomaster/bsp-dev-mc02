@@ -49,7 +49,14 @@ extern UART_HandleTypeDef huart7;
 
 /* DMA Resources */
 #if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
-static struct alignas(__SCB_DCACHE_LINE_SIZE)
+#if defined(__SCB_DCACHE_LINE_SIZE)
+#define XR_DCACHE_LINE_SIZE __SCB_DCACHE_LINE_SIZE
+#else
+#define XR_DCACHE_LINE_SIZE 32U
+#endif
+#endif
+#if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
+static struct alignas(XR_DCACHE_LINE_SIZE)
 {
   uint16_t data[128];
 } adc1_buf_storage __attribute__((section(".axi_ram")));
@@ -58,7 +65,7 @@ static constexpr auto& adc1_buf = adc1_buf_storage.data;
 alignas(4) static uint16_t adc1_buf[128] __attribute__((section(".axi_ram")));
 #endif
 #if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
-static struct alignas(__SCB_DCACHE_LINE_SIZE)
+static struct alignas(XR_DCACHE_LINE_SIZE)
 {
   uint8_t data[32];
 } spi2_tx_buf_storage __attribute__((section(".axi_ram")));
@@ -67,7 +74,7 @@ static constexpr auto& spi2_tx_buf = spi2_tx_buf_storage.data;
 alignas(4) static uint8_t spi2_tx_buf[32] __attribute__((section(".axi_ram")));
 #endif
 #if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
-static struct alignas(__SCB_DCACHE_LINE_SIZE)
+static struct alignas(XR_DCACHE_LINE_SIZE)
 {
   uint8_t data[32];
 } spi2_rx_buf_storage __attribute__((section(".axi_ram")));
@@ -76,7 +83,7 @@ static constexpr auto& spi2_rx_buf = spi2_rx_buf_storage.data;
 alignas(4) static uint8_t spi2_rx_buf[32] __attribute__((section(".axi_ram")));
 #endif
 #if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
-static struct alignas(__SCB_DCACHE_LINE_SIZE)
+static struct alignas(XR_DCACHE_LINE_SIZE)
 {
   uint8_t data[32];
 } spi6_tx_buf_storage __attribute__((section(".ram_d3")));
@@ -85,7 +92,7 @@ static constexpr auto& spi6_tx_buf = spi6_tx_buf_storage.data;
 alignas(4) static uint8_t spi6_tx_buf[32] __attribute__((section(".ram_d3")));
 #endif
 #if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
-static struct alignas(__SCB_DCACHE_LINE_SIZE)
+static struct alignas(XR_DCACHE_LINE_SIZE)
 {
   uint8_t data[128];
 } uart5_rx_buf_storage __attribute__((section(".axi_ram")));
@@ -94,7 +101,7 @@ static constexpr auto& uart5_rx_buf = uart5_rx_buf_storage.data;
 alignas(4) static uint8_t uart5_rx_buf[128] __attribute__((section(".axi_ram")));
 #endif
 #if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
-static struct alignas(__SCB_DCACHE_LINE_SIZE)
+static struct alignas(XR_DCACHE_LINE_SIZE)
 {
   uint8_t data[128];
 } uart7_tx_buf_storage __attribute__((section(".axi_ram")));
@@ -103,7 +110,7 @@ static constexpr auto& uart7_tx_buf = uart7_tx_buf_storage.data;
 alignas(4) static uint8_t uart7_tx_buf[128] __attribute__((section(".axi_ram")));
 #endif
 #if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
-static struct alignas(__SCB_DCACHE_LINE_SIZE)
+static struct alignas(XR_DCACHE_LINE_SIZE)
 {
   uint8_t data[128];
 } uart7_rx_buf_storage __attribute__((section(".axi_ram")));
@@ -112,7 +119,7 @@ static constexpr auto& uart7_rx_buf = uart7_rx_buf_storage.data;
 alignas(4) static uint8_t uart7_rx_buf[128] __attribute__((section(".axi_ram")));
 #endif
 #if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
-static struct alignas(__SCB_DCACHE_LINE_SIZE)
+static struct alignas(XR_DCACHE_LINE_SIZE)
 {
   uint8_t data[128];
 } usart1_tx_buf_storage __attribute__((section(".axi_ram")));
@@ -121,7 +128,7 @@ static constexpr auto& usart1_tx_buf = usart1_tx_buf_storage.data;
 alignas(4) static uint8_t usart1_tx_buf[128] __attribute__((section(".axi_ram")));
 #endif
 #if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
-static struct alignas(__SCB_DCACHE_LINE_SIZE)
+static struct alignas(XR_DCACHE_LINE_SIZE)
 {
   uint8_t data[128];
 } usart1_rx_buf_storage __attribute__((section(".axi_ram")));
@@ -130,7 +137,7 @@ static constexpr auto& usart1_rx_buf = usart1_rx_buf_storage.data;
 alignas(4) static uint8_t usart1_rx_buf[128] __attribute__((section(".axi_ram")));
 #endif
 #if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
-static struct alignas(__SCB_DCACHE_LINE_SIZE)
+static struct alignas(XR_DCACHE_LINE_SIZE)
 {
   uint8_t data[128];
 } usart10_tx_buf_storage __attribute__((section(".axi_ram")));
@@ -139,7 +146,7 @@ static constexpr auto& usart10_tx_buf = usart10_tx_buf_storage.data;
 alignas(4) static uint8_t usart10_tx_buf[128] __attribute__((section(".axi_ram")));
 #endif
 #if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
-static struct alignas(__SCB_DCACHE_LINE_SIZE)
+static struct alignas(XR_DCACHE_LINE_SIZE)
 {
   uint8_t data[128];
 } usart10_rx_buf_storage __attribute__((section(".axi_ram")));
@@ -148,7 +155,7 @@ static constexpr auto& usart10_rx_buf = usart10_rx_buf_storage.data;
 alignas(4) static uint8_t usart10_rx_buf[128] __attribute__((section(".axi_ram")));
 #endif
 #if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
-static struct alignas(__SCB_DCACHE_LINE_SIZE)
+static struct alignas(XR_DCACHE_LINE_SIZE)
 {
   uint8_t data[128];
 } usart2_tx_buf_storage __attribute__((section(".axi_ram")));
@@ -157,7 +164,7 @@ static constexpr auto& usart2_tx_buf = usart2_tx_buf_storage.data;
 alignas(4) static uint8_t usart2_tx_buf[128] __attribute__((section(".axi_ram")));
 #endif
 #if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
-static struct alignas(__SCB_DCACHE_LINE_SIZE)
+static struct alignas(XR_DCACHE_LINE_SIZE)
 {
   uint8_t data[128];
 } usart2_rx_buf_storage __attribute__((section(".axi_ram")));
@@ -166,7 +173,7 @@ static constexpr auto& usart2_rx_buf = usart2_rx_buf_storage.data;
 alignas(4) static uint8_t usart2_rx_buf[128] __attribute__((section(".axi_ram")));
 #endif
 #if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
-static struct alignas(__SCB_DCACHE_LINE_SIZE)
+static struct alignas(XR_DCACHE_LINE_SIZE)
 {
   uint8_t data[128];
 } usart3_tx_buf_storage __attribute__((section(".axi_ram")));
@@ -175,7 +182,7 @@ static constexpr auto& usart3_tx_buf = usart3_tx_buf_storage.data;
 alignas(4) static uint8_t usart3_tx_buf[128] __attribute__((section(".axi_ram")));
 #endif
 #if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
-static struct alignas(__SCB_DCACHE_LINE_SIZE)
+static struct alignas(XR_DCACHE_LINE_SIZE)
 {
   uint8_t data[128];
 } usart3_rx_buf_storage __attribute__((section(".axi_ram")));
@@ -184,7 +191,7 @@ static constexpr auto& usart3_rx_buf = usart3_rx_buf_storage.data;
 alignas(4) static uint8_t usart3_rx_buf[128] __attribute__((section(".axi_ram")));
 #endif
 #if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
-static struct alignas(__SCB_DCACHE_LINE_SIZE)
+static struct alignas(XR_DCACHE_LINE_SIZE)
 {
   uint8_t data[8];
 } usb_otg_hs_ep0_in_buf_storage __attribute__((section(".axi_ram")));
@@ -193,7 +200,7 @@ static constexpr auto& usb_otg_hs_ep0_in_buf = usb_otg_hs_ep0_in_buf_storage.dat
 alignas(4) static uint8_t usb_otg_hs_ep0_in_buf[8] __attribute__((section(".axi_ram")));
 #endif
 #if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
-static struct alignas(__SCB_DCACHE_LINE_SIZE)
+static struct alignas(XR_DCACHE_LINE_SIZE)
 {
   uint8_t data[8];
 } usb_otg_hs_ep0_out_buf_storage __attribute__((section(".axi_ram")));
@@ -202,7 +209,7 @@ static constexpr auto& usb_otg_hs_ep0_out_buf = usb_otg_hs_ep0_out_buf_storage.d
 alignas(4) static uint8_t usb_otg_hs_ep0_out_buf[8] __attribute__((section(".axi_ram")));
 #endif
 #if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
-static struct alignas(__SCB_DCACHE_LINE_SIZE)
+static struct alignas(XR_DCACHE_LINE_SIZE)
 {
   uint8_t data[128];
 } usb_otg_hs_ep1_in_buf_storage __attribute__((section(".axi_ram")));
@@ -211,7 +218,7 @@ static constexpr auto& usb_otg_hs_ep1_in_buf = usb_otg_hs_ep1_in_buf_storage.dat
 alignas(4) static uint8_t usb_otg_hs_ep1_in_buf[128] __attribute__((section(".axi_ram")));
 #endif
 #if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
-static struct alignas(__SCB_DCACHE_LINE_SIZE)
+static struct alignas(XR_DCACHE_LINE_SIZE)
 {
   uint8_t data[128];
 } usb_otg_hs_ep1_out_buf_storage __attribute__((section(".axi_ram")));
@@ -220,7 +227,7 @@ static constexpr auto& usb_otg_hs_ep1_out_buf = usb_otg_hs_ep1_out_buf_storage.d
 alignas(4) static uint8_t usb_otg_hs_ep1_out_buf[128] __attribute__((section(".axi_ram")));
 #endif
 #if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
-static struct alignas(__SCB_DCACHE_LINE_SIZE)
+static struct alignas(XR_DCACHE_LINE_SIZE)
 {
   uint8_t data[16];
 } usb_otg_hs_ep2_in_buf_storage __attribute__((section(".axi_ram")));
