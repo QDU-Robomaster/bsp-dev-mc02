@@ -335,11 +335,14 @@ extern "C" void app_main(void) {
                      static_cast<LibXR::Thread::Priority>(2));
 
   XR_REGISTER(power_manager, LibXR::PowerManager);
+  XR_REGISTER(PA15, LibXR::GPIO);
   XR_REGISTER(LCD_BLK, LibXR::GPIO);
   XR_REGISTER(LCD_RES, LibXR::GPIO);
   XR_REGISTER(ACC_CS, LibXR::GPIO);
   XR_REGISTER(POWER_24V_2, LibXR::GPIO);
+  XR_REGISTER(PC14, LibXR::GPIO);
   XR_REGISTER(POWER_5V, LibXR::GPIO);
+  XR_REGISTER(GYRO_CS, LibXR::GPIO);
   XR_REGISTER(ACC_INT, LibXR::GPIO);
   XR_REGISTER(W25Q64_CS, LibXR::GPIO);
   XR_REGISTER(GYRO_INT, LibXR::GPIO);
@@ -367,9 +370,6 @@ extern "C" void app_main(void) {
   XR_REGISTER(usb_otg_hs_cdc, LibXR::UART);
   XR_REGISTER(ramfs, LibXR::RamFS);
   XR_REGISTER(terminal, LibXR::Terminal<32, 32, 5, 5>);
-  XR_REGISTER(PA15, LibXR::GPIO);
-  XR_REGISTER(PC14, LibXR::GPIO);
-  XR_REGISTER(GYRO_CS, LibXR::GPIO);
 
   // clang-format on
   // NOLINTEND
