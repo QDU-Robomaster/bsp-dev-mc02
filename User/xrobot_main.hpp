@@ -1,7 +1,6 @@
 #pragma once
 // xrobot-stamp: config=xrobot.yaml sha256=daaf7e46ebf62348999688571efd6179e48d22520ac320d5026ce363a264b4f5
 // xrobot-stamp: lock=../xrobot.lock sha256=bc6224bfec2306003ed064ba01fb706f2602abffcf27ef4054d39e0154d297e8
-// xrobot-stamp: tool=xrobot 0.3.1
 
 #include <memory>
 #include <type_traits>
