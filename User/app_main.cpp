@@ -302,10 +302,13 @@ extern "C" void app_main(void) {
               usart3_rx_buf, usart3_tx_buf, 5);
 
   static STM32CANFD fdcan1(&hfdcan1, 5);
+  LibXR::CAN& can1 = fdcan1;
 
   static STM32CANFD fdcan2(&hfdcan2, 5);
+  LibXR::CAN& can2 = fdcan2;
 
   static STM32CANFD fdcan3(&hfdcan3, 5);
+  LibXR::CAN& can3 = fdcan3;
 
   static constexpr auto USB_OTG_HS_LANG_PACK = LibXR::USB::DescriptorStrings::MakeLanguagePack(LibXR::USB::DescriptorStrings::Language::EN_US, "QDU-Future", "MainCtrl", "QDU-Future-MainCtrl-89ABCDEF0123456701234567");
   static LibXR::USB::CDCUart usb_otg_hs_cdc(LibXR::USB::Endpoint::EPNumber::EP1, LibXR::USB::Endpoint::EPNumber::EP1, LibXR::USB::Endpoint::EPNumber::EP2, 128, 128, 3);
@@ -365,8 +368,11 @@ extern "C" void app_main(void) {
   XR_REGISTER(usart2, LibXR::UART);
   XR_REGISTER(usart3, LibXR::UART);
   XR_REGISTER(fdcan1, LibXR::FDCAN);
+  XR_REGISTER(can1, LibXR::CAN);
   XR_REGISTER(fdcan2, LibXR::FDCAN);
+  XR_REGISTER(can2, LibXR::CAN);
   XR_REGISTER(fdcan3, LibXR::FDCAN);
+  XR_REGISTER(can3, LibXR::CAN);
   XR_REGISTER(usb_otg_hs_cdc, LibXR::UART);
   XR_REGISTER(ramfs, LibXR::RamFS);
   XR_REGISTER(terminal, LibXR::Terminal<32, 32, 5, 5>);
@@ -378,6 +384,6 @@ extern "C" void app_main(void) {
   static LibXR::DatabaseRaw<32> database(flash);
 
   XR_REGISTER(database, LibXR::Database);
-  XROBOT_MAIN();
   /* User Code End 3 */
+  XROBOT_MAIN();
 }
