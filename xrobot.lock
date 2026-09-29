@@ -12,7 +12,4 @@ modules:
     context:
     - branch
     - feat/static-assembly-20260915
-    commit: 6e73d640b4ad773184c3d5db5bcb0d29ebe439a8
-root_context:
-- branch
-- feat/static-assembly-20260915
+    commit: 44424519645a0d9297d5a7bd57b8dd4e0c342e74
