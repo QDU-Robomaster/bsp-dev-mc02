@@ -69,11 +69,17 @@ void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 void vApplicationStackOverflowHook(TaskHandle_t xTask, char *pcTaskName);
 
 /* USER CODE BEGIN 4 */
-__weak void vApplicationStackOverflowHook(TaskHandle_t xTask, char *pcTaskName)
+/* 栈溢出时进入 LibXR 的错误处理；强定义覆盖 CubeMX、CMSIS-RTOS2 和 LibXR 中的弱定义。
+   A stack overflow goes to LibXR's error handling; this strong definition overrides the weak
+   ones of CubeMX, CMSIS-RTOS2 and LibXR. */
+extern void libxr_fatal_error(const char *file, uint32_t line, int in_isr);
+
+void vApplicationStackOverflowHook(TaskHandle_t xTask, char *pcTaskName)
 {
-   /* Run time stack overflow checking is performed if
-   configCHECK_FOR_STACK_OVERFLOW is defined to 1 or 2. This hook function is
-   called if a stack overflow is detected. */
+  (void)xTask;
+  (void)pcTaskName;
+  taskDISABLE_INTERRUPTS();
+  libxr_fatal_error(__FILE__, __LINE__, 0);
 }
 /* USER CODE END 4 */
 
