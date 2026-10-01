@@ -51,11 +51,11 @@ ADC:
     dma_section: .axi_ram
     vref: 3.3
 FDCAN:
-  FDCAN1:
+  fdcan1:
     queue_size: 5
-  FDCAN2:
+  fdcan2:
     queue_size: 5
-  FDCAN3:
+  fdcan3:
     queue_size: 5
 USB:
   usb_otg_hs:
