@@ -246,7 +246,7 @@ extern "C" void app_main(void) {
   // clang-format off
   // NOLINTBEGIN
   static STM32TimerTimebase timebase(&htim4);
-  PlatformInit(2, 1024);
+  PlatformInit(static_cast<uint32_t>(LibXR::Thread::Priority::MEDIUM), 1024);
   static STM32PowerManager power_manager;
 
   /* GPIO Configuration */
@@ -337,7 +337,7 @@ extern "C" void app_main(void) {
   static Terminal<32, 32, 5, 5> terminal(ramfs);
   static LibXR::Thread term_thread;
   term_thread.Create(&terminal, terminal.ThreadFun, "terminal", 2048,
-                     static_cast<LibXR::Thread::Priority>(2));
+                     LibXR::Thread::Priority::MEDIUM);
 
   XR_REGISTER(power_manager, LibXR::PowerManager);
   XR_REGISTER(PA15, LibXR::GPIO);
