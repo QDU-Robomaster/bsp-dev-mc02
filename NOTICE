@@ -21,7 +21,7 @@ Middlewares/Third_Party/FreeRTOS/Source/
   CMSIS_RTOS/: CMSIS-RTOS v1 wrapper, portions Copyright STMicroelectronics and
   ARM Limited; BSD 3-Clause style terms as stated in the file headers.
 
-STM32CubeMX-generated files: Core/, startup_stm32h723xx.s, STM32H723XG_FLASH.ld
+STM32CubeMX-generated files: Core/, startup_stm32h723xx.s, STM32H723xG_flash.ld
   Generated from STMicroelectronics templates. They keep the STMicroelectronics
   (and, in Core/Inc/FreeRTOSConfig.h, Amazon) copyright notices and the license
   terms stated in their headers; the linker scripts carry a BSD 3-Clause style

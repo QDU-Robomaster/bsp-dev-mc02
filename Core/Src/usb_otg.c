@@ -22,22 +22,34 @@
 
 /* USER CODE BEGIN 0 */
 #include <string.h>
+
+/* USB HS 的 DMA 访问不到 DTCM，句柄（含 Setup 缓冲区）放在 RAM_D1；该段不在启动时清零，
+   所以初始化前清零。
+   USB HS DMA cannot reach DTCM, so the handle (with its Setup buffer) lives in RAM_D1; that
+   section is not cleared at startup, so it is cleared before init. */
+#if defined(__clang__)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wsection"
+#endif
+extern PCD_HandleTypeDef hpcd_USB_OTG_HS __attribute__((section(".ram_d1")));
+#if defined(__clang__)
+#pragma clang diagnostic pop
+#endif
 /* USER CODE END 0 */
 
-PCD_HandleTypeDef hpcd_USB_OTG_HS __attribute__((section(".ram_d1")));
+PCD_HandleTypeDef hpcd_USB_OTG_HS;
 
 /* USB_OTG_HS init function */
 
 void MX_USB_OTG_HS_PCD_Init(void)
 {
-
-  /* USER CODE BEGIN USB_OTG_HS_Init 0 */
+  /* USER CODE BEGIN USB_OTG_HS_PCD_Init 0 */
   memset(&hpcd_USB_OTG_HS, 0, sizeof(hpcd_USB_OTG_HS));
-  /* USER CODE END USB_OTG_HS_Init 0 */
+  /* USER CODE END USB_OTG_HS_PCD_Init 0 */
 
-  /* USER CODE BEGIN USB_OTG_HS_Init 1 */
+  /* USER CODE BEGIN USB_OTG_HS_PCD_Init 1 */
 
-  /* USER CODE END USB_OTG_HS_Init 1 */
+  /* USER CODE END USB_OTG_HS_PCD_Init 1 */
   hpcd_USB_OTG_HS.Instance = USB_OTG_HS;
   hpcd_USB_OTG_HS.Init.dev_endpoints = 9;
   hpcd_USB_OTG_HS.Init.speed = PCD_SPEED_FULL;
@@ -53,9 +65,9 @@ void MX_USB_OTG_HS_PCD_Init(void)
   {
     Error_Handler();
   }
-  /* USER CODE BEGIN USB_OTG_HS_Init 2 */
+  /* USER CODE BEGIN USB_OTG_HS_PCD_Init 2 */
 
-  /* USER CODE END USB_OTG_HS_Init 2 */
+  /* USER CODE END USB_OTG_HS_PCD_Init 2 */
 
 }
 
@@ -65,9 +77,9 @@ void HAL_PCD_MspInit(PCD_HandleTypeDef* pcdHandle)
   RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
   if(pcdHandle->Instance==USB_OTG_HS)
   {
-  /* USER CODE BEGIN USB_OTG_HS_MspInit 0 */
+  /* USER CODE BEGIN USB_OTG_HS_PCD_MspInit 0 */
 
-  /* USER CODE END USB_OTG_HS_MspInit 0 */
+  /* USER CODE END USB_OTG_HS_PCD_MspInit 0 */
 
   /** Initializes the peripherals clock
   */
@@ -88,9 +100,9 @@ void HAL_PCD_MspInit(PCD_HandleTypeDef* pcdHandle)
     /* USB_OTG_HS interrupt Init */
     HAL_NVIC_SetPriority(OTG_HS_IRQn, 5, 0);
     HAL_NVIC_EnableIRQ(OTG_HS_IRQn);
-  /* USER CODE BEGIN USB_OTG_HS_MspInit 1 */
+  /* USER CODE BEGIN USB_OTG_HS_PCD_MspInit 1 */
 
-  /* USER CODE END USB_OTG_HS_MspInit 1 */
+  /* USER CODE END USB_OTG_HS_PCD_MspInit 1 */
   }
 }
 
@@ -99,20 +111,21 @@ void HAL_PCD_MspDeInit(PCD_HandleTypeDef* pcdHandle)
 
   if(pcdHandle->Instance==USB_OTG_HS)
   {
-  /* USER CODE BEGIN USB_OTG_HS_MspDeInit 0 */
+  /* USER CODE BEGIN USB_OTG_HS_PCD_MspDeInit 0 */
 
-  /* USER CODE END USB_OTG_HS_MspDeInit 0 */
+  /* USER CODE END USB_OTG_HS_PCD_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_USB_OTG_HS_CLK_DISABLE();
 
     /* USB_OTG_HS interrupt Deinit */
     HAL_NVIC_DisableIRQ(OTG_HS_IRQn);
-  /* USER CODE BEGIN USB_OTG_HS_MspDeInit 1 */
+  /* USER CODE BEGIN USB_OTG_HS_PCD_MspDeInit 1 */
 
-  /* USER CODE END USB_OTG_HS_MspDeInit 1 */
+  /* USER CODE END USB_OTG_HS_PCD_MspDeInit 1 */
   }
 }
 
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */
+
