@@ -382,7 +382,7 @@ extern "C" void app_main(void) {
   // clang-format on
   // NOLINTEND
   /* User Code Begin 3 */
-  static STM32Flash flash(FLASH_SECTORS, FLASH_SECTOR_NUMBER);
+  static STM32Flash flash(FLASH_REGIONS, FLASH_REGION_NUMBER);
   static LibXR::DatabaseRaw<32> database(flash);
 
   XR_REGISTER(database, LibXR::Database);
