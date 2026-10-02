@@ -38,7 +38,7 @@ cmake --preset Debug
 cmake --build --preset Debug
 ```
 
-Preset 有 `Debug` 和 `Release`，输出在 `build/<preset>/CtrBoard-H7_ALL.elf`。构建前 LibXR 检查 `User/xrobot_main.hpp` 是否比配置、锁文件、入口和模块头文件新，过期时构建失败并提示对应的 `xrobot gen -c <配置>`。
+Preset 有 `Debug` 和 `Release`，输出在 `build/<preset>/CtrBoard-H7_ALL.elf`。构建前 LibXR 检查配置、锁文件、模块头文件和入口源文件中的注册在生成 `User/xrobot_main.hpp` 之后是否有改动，有改动时构建失败并提示对应的 `xrobot gen -c <配置>`。
 
 修改 `User/xrobot.yaml` 或添加其他 `User/*.yaml` 产品配置的方法见 [项目管理（XRobot）](https://xrobot.work/docs/proj_man)。配置里的硬件名是 `User/app_main.cpp` 中 `XR_REGISTER` 注册的对象名（如 `fdcan1`、`can1`、`usart1`、`spi2`、`pwm_tim12_ch2`）；每个 FDCAN 同时以 `fdcanN`（`LibXR::FDCAN`）和 `canN`（`LibXR::CAN`）注册。
 
