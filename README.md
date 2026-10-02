@@ -44,14 +44,13 @@ Preset 有 `Debug` 和 `Release`，输出在 `build/<preset>/CtrBoard-H7_ALL.elf
 
 ## 修改 CubeMX 配置后
 
-在 CubeMX 中生成代码后，重新生成 BSP 对象（与 CI 相同的命令）：
+在 CubeMX 中生成代码后，重新生成 BSP 对象：
 
 ```bash
-libxr parse -d . -o .config.yaml
-libxr gen -i .config.yaml -o User/app_main.cpp --xrobot --libxr-config User/libxr_config.yaml
+libxr stm32 setup
 ```
 
-`User/app_main.cpp` 中 `User Code` 区域的内容会保留。提交 `User/app_main.cpp`、`User/app_main.h`、`User/flash_map.hpp` 和 `User/libxr_config.yaml`；CI 会重新生成并检查它们与提交一致。
+`libxr stm32 setup` 沿用 `User/app_main.cpp` 中的 XRobot 选择和现有的 LibXR 检出，`User Code` 区域的内容保留，`cmake/LibXR.CMake` 随之更新。提交 `User/app_main.cpp`、`User/app_main.h`、`User/flash_map.hpp` 和 `User/libxr_config.yaml`；CI 用 `libxr parse` 和 `libxr gen` 重新生成并检查它们与提交一致。
 
 ## CI
 
