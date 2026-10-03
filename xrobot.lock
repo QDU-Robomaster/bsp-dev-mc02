@@ -8,9 +8,6 @@ modules:
     repo: https://github.com/xrobot-org/BuzzerAlarm.git
     source: https://xrobot.work/xrobot-modules/index.yaml
     requested: same-or-dev
-    resolved_ref: feat/static-assembly-20260915
+    resolved_ref: dev
     ref_kind: branch
-    context:
-    - branch
-    - feat/static-assembly-20260915
     commit: 44424519645a0d9297d5a7bd57b8dd4e0c342e74
