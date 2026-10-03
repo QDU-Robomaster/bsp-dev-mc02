@@ -151,6 +151,14 @@ SECTIONS
     . = ALIGN(4);
   } >FLASH
 
+  /* GOT entries are link-time constants in this static image */
+  .got :
+  {
+    . = ALIGN(4);
+    *(.got .got.*)
+    . = ALIGN(4);
+  } >FLASH
+
   /* used by the startup to initialize data */
   _sidata = LOADADDR(.data);
 
