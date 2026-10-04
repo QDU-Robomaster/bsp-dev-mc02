@@ -3,11 +3,10 @@
 // MCU: STM32H723VGT6
 
 #include "main.h"
-
 #include "stm32_flash.hpp"
 
 constexpr LibXR::FlashRegion FLASH_REGIONS[] = {
-  {0x08000000, 0x00020000, 8},
+    {0x08000000, 0x00020000, 8},
 };
 
 constexpr size_t FLASH_REGION_NUMBER = sizeof(FLASH_REGIONS) / sizeof(LibXR::FlashRegion);
