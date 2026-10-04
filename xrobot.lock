@@ -10,4 +10,4 @@ modules:
     requested: same-or-dev
     resolved_ref: dev
     ref_kind: branch
-    commit: 44424519645a0d9297d5a7bd57b8dd4e0c342e74
+    commit: 8bd6b55d821200d2f97c40c1a49f41bb126b22e1
