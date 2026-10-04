@@ -1,32 +1,19 @@
-name: xrobot stm32 build test
+name: build
 
 on:
   push:
-    branches: [ "main", "master" ]
+    branches: [main, master, dev]
+    tags: ['v*']
   pull_request:
-    branches: [ "main", "master" ]
+    branches: [main, master, dev]
+  workflow_dispatch:
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/xrobot-org/docker-image-stm32:main
-      options: --user 0
-
-    steps:
-    - uses: actions/checkout@v4
-    - name: init submodule
-      run: git config --global --add safe.directory "$GITHUB_WORKSPACE" && git submodule update --init --recursive
-    - name: install pip packages
-      run: pip install libxr xrobot
-    - name: config libxr
-      run: xr_cubemx_cfg -d ./ --xrobot
-    - name: config xrobot module
-      run: xrobot_src_man create-sources && xrobot_init_mod --config https://raw.githubusercontent.com/QDU-Robomaster/dev-c-robots/refs/heads/main/test.yaml --dir ./Modules
-    - name: xrobot generate code
-      run: xrobot_setup
-    - name: config cmake
-      run: export GCC_TOOLCHAIN_ROOT=/opt/arm-gnu-toolchain-14.2.rel1-x86_64-arm-none-eabi/bin && export CLANG_GCC_CMSIS_COMPILER=/opt/st-arm-clang && cmake . -DCMAKE_TOOLCHAIN_FILE:STRING=cmake/starm-clang.cmake -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE -Bbuild -G Ninja
-    - name: build
-      run: cmake --build build
+    # The release job of the shared workflow attaches firmware to releases, which needs write access.
+    permissions:
+      contents: write
+    uses: xrobot-org/XRobot/.github/workflows/bsp-stm32-ci.yml@v1
+    with:
+      project: CtrBoard-H7_ALL
+      build-type: Debug
