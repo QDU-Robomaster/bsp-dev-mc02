@@ -152,6 +152,10 @@ extern "C" void app_main(void)
   term_thread.Create(&terminal, terminal.ThreadFun, "terminal", 2048,
                      Thread::Priority::MEDIUM);
 
+  // Flash and database
+  static STM32Flash flash(FLASH_REGIONS, FLASH_REGION_NUMBER);
+  static DatabaseRaw<32> database(flash);
+
   // Hardware registration
   XR_REGISTER(power_manager, LibXR::PowerManager);
 
@@ -203,11 +207,9 @@ extern "C" void app_main(void)
 
   XR_REGISTER(terminal, LibXR::Terminal<32, 32, 5, 5>);
 
-  /* User Code Begin 3 */
-  static STM32Flash flash(FLASH_REGIONS, FLASH_REGION_NUMBER);
-  static LibXR::DatabaseRaw<32> database(flash);
-
   XR_REGISTER(database, LibXR::Database);
+
+  /* User Code Begin 3 */
   /* User Code End 3 */
   XROBOT_MAIN();
 }

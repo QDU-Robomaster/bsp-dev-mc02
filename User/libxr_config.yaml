@@ -83,8 +83,8 @@ Terminal:
   thread_stack_depth: 2048
   thread_priority: 2
 database:
-  enable: false
-  block_size: 1
+  enable: true
+  block_size: 32
 SYSTEM: FreeRTOS
 DAC:
   dac1:
