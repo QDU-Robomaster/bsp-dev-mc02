@@ -56,7 +56,7 @@ cmake --build --preset Debug
 
 在 CubeMX 中修改并重新生成代码后，运行 `libxr stm32 setup` 更新 `User/app_main.cpp`、`User/app_main.h`、`User/flash_map.hpp`、`User/libxr_config.yaml` 和 `cmake/LibXR.CMake`，`User Code` 区域保留。命令说明见 [LibXR_CppCodeGenerator](https://github.com/xrobot-org/LibXR_CppCodeGenerator)。
 
-`.github/workflows/xrobot_stm32.yml` 调用 XRobot 仓库中的共享工作流 `bsp-stm32-ci.yml`，写出工程名 `CtrBoard-H7_ALL` 和构建类型 `Debug`。共享工作流在 `ghcr.io/xrobot-org/docker-image-stm32:main` 中安装固定版本的工具，用 `libxr parse` 和 `libxr gen` 重新生成上述文件并与提交比对，检查仓库内的文本文件使用 LF 换行，运行 `xrobot format --check` 和 `xrobot setup --frozen`，再用 `cmake/starm-clang.cmake` 构建默认配置的固件。`dev` 分支接收修改，`master` 分支由 `dev` 的 PR 更新。
+`.github/workflows/xrobot_stm32.yml` 调用 XRobot 仓库中的共享工作流 `bsp-stm32-ci.yml`，写出工程名 `CtrBoard-H7_ALL` 和构建类型 `Debug`。共享工作流在 `ghcr.io/xrobot-org/docker-image-stm32:main` 中安装固定版本的工具，用 `libxr parse` 和 `libxr gen` 重新生成 `User/` 下的四个文件并与提交比对，检查仓库内的文本文件使用 LF 换行，运行 `xrobot format --check` 和 `xrobot setup --frozen`，再用 `cmake/starm-clang.cmake` 构建默认配置的固件。`dev` 分支接收修改，`master` 分支由 `dev` 的 PR 更新。
 
 Building uses CMake, Ninja and ST's `starm-clang` toolchain (provided by STM32CubeCLT or the VS Code STM32Cube extension), with `starm-clang` on `PATH`. The presets use `cmake/starm-clang.cmake` (picolibc configuration). XRobot is 1.0.0 and the LibXR CodeGenerator is 6.0.0, matching `xrobot:` in `Modules/modules.yaml` and `generator:` in `User/libxr_config.yaml`.
 
@@ -64,7 +64,7 @@ Building uses CMake, Ninja and ST's `starm-clang` toolchain (provided by STM32Cu
 
 After changing and regenerating the code in CubeMX, `libxr stm32 setup` updates `User/app_main.cpp`, `User/app_main.h`, `User/flash_map.hpp`, `User/libxr_config.yaml` and `cmake/LibXR.CMake`, and keeps the `User Code` regions. The commands are described in [LibXR_CppCodeGenerator](https://github.com/xrobot-org/LibXR_CppCodeGenerator).
 
-`.github/workflows/xrobot_stm32.yml` calls the shared workflow `bsp-stm32-ci.yml` of the XRobot repository and names the project `CtrBoard-H7_ALL` and the build type `Debug`. The shared workflow installs the pinned tools in `ghcr.io/xrobot-org/docker-image-stm32:main`, regenerates the files above with `libxr parse` and `libxr gen` and compares them with the commit, checks that the text files in the repository use LF line endings, runs `xrobot format --check` and `xrobot setup --frozen`, and then builds the firmware of the default configuration with `cmake/starm-clang.cmake`. The `dev` branch receives changes and the `master` branch is updated by PRs from `dev`.
+`.github/workflows/xrobot_stm32.yml` calls the shared workflow `bsp-stm32-ci.yml` of the XRobot repository and names the project `CtrBoard-H7_ALL` and the build type `Debug`. The shared workflow installs the pinned tools in `ghcr.io/xrobot-org/docker-image-stm32:main`, regenerates the four files under `User/` with `libxr parse` and `libxr gen` and compares them with the commit, checks that the text files in the repository use LF line endings, runs `xrobot format --check` and `xrobot setup --frozen`, and then builds the firmware of the default configuration with `cmake/starm-clang.cmake`. The `dev` branch receives changes and the `master` branch is updated by PRs from `dev`.
 
 ## 4. 烧录与运行 / Flash and Run
 
