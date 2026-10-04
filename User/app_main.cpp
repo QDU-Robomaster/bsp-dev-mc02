@@ -48,6 +48,7 @@ extern UART_HandleTypeDef huart10;
 alignas(32) static uint16_t adc1_buf[128] __attribute__((section(".axi_ram")));
 alignas(32) static uint8_t spi2_rx_buf[32] __attribute__((section(".axi_ram")));
 alignas(32) static uint8_t spi2_tx_buf[32] __attribute__((section(".axi_ram")));
+alignas(32) static uint8_t spi6_rx_buf[32] __attribute__((section(".ram_d3")));
 alignas(32) static uint8_t spi6_tx_buf[32] __attribute__((section(".ram_d3")));
 alignas(32) static uint8_t uart5_rx_buf[128] __attribute__((section(".axi_ram")));
 alignas(32) static uint8_t uart7_rx_buf[128] __attribute__((section(".axi_ram")));
@@ -111,7 +112,7 @@ extern "C" void app_main(void)
 
   // SPI, UART, CAN
   static STM32SPI spi2(&hspi2, spi2_rx_buf, spi2_tx_buf, 3);
-  static STM32SPI spi6(&hspi6, {nullptr, 0}, spi6_tx_buf, 3);
+  static STM32SPI spi6(&hspi6, spi6_rx_buf, spi6_tx_buf, UINT32_MAX);
   static STM32UART uart5(&huart5, uart5_rx_buf, {nullptr, 0}, 5);
   static STM32UART uart7(&huart7, uart7_rx_buf, uart7_tx_buf, 5);
   static STM32UART usart1(&huart1, usart1_rx_buf, usart1_tx_buf, 5);
@@ -128,7 +129,7 @@ extern "C" void app_main(void)
   // USB OTG HS: 1 CDC
   static constexpr auto usb_otg_hs_strings = USB::DescriptorStrings::MakeLanguagePack(
       USB::DescriptorStrings::Language::EN_US, "QDU-Future", "MainCtrl",
-      "QDU-Future-MainCtrl-89ABCDEF0123456701234567");
+      "QDU-Future-MainCtrl-");
   static USB::CDCUart usb_otg_hs_cdc(USB::Endpoint::EPNumber::EP1,
                                      USB::Endpoint::EPNumber::EP1,
                                      USB::Endpoint::EPNumber::EP2, 128, 128, 3);
@@ -137,7 +138,7 @@ extern "C" void app_main(void)
       {{{usb_otg_hs_ep0_in_buf, 8}, 8},
        {usb_otg_hs_ep1_in_buf, 128},
        {{usb_otg_hs_ep2_in_buf, 16}, 16}},
-      USB::DeviceDescriptor::PacketSize0::SIZE_8, 0x16D0, 0x1492, 0xF407,
+      USB::DeviceDescriptor::PacketSize0::SIZE_8, 0x1D50, 0x6199, 0xF407,
       {&usb_otg_hs_strings}, {{&usb_otg_hs_cdc}},
       {reinterpret_cast<void*>(UID_BASE), 12});
   usb_otg_hs.Init(false);

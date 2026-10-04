@@ -68,12 +68,12 @@ USB:
     dma_section: .axi_ram
     cdc:
     - {tx_fifo_size: 128, rx_fifo_size: 128, queue_size: 3}
-    vid: 5840
-    pid: 5266
+    vid: 7504
+    pid: 24985
     bcd: 62471
     manufacturer: QDU-Future
     product: MainCtrl
-    serial: QDU-Future-MainCtrl-89ABCDEF0123456701234567
+    serial: QDU-Future-MainCtrl-
 Terminal:
   read_buff_size: 32
   max_line_size: 32
