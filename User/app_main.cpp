@@ -48,6 +48,7 @@ extern UART_HandleTypeDef huart10;
 alignas(32) static uint16_t adc1_buf[128] __attribute__((section(".axi_ram")));
 alignas(32) static uint8_t spi2_rx_buf[32] __attribute__((section(".axi_ram")));
 alignas(32) static uint8_t spi2_tx_buf[32] __attribute__((section(".axi_ram")));
+alignas(32) static uint8_t spi6_rx_buf[32] __attribute__((section(".ram_d3")));
 alignas(32) static uint8_t spi6_tx_buf[32] __attribute__((section(".ram_d3")));
 alignas(32) static uint8_t uart5_rx_buf[128] __attribute__((section(".axi_ram")));
 alignas(32) static uint8_t uart7_rx_buf[128] __attribute__((section(".axi_ram")));
@@ -111,7 +112,7 @@ extern "C" void app_main(void)
 
   // SPI, UART, CAN
   static STM32SPI spi2(&hspi2, spi2_rx_buf, spi2_tx_buf, 3);
-  static STM32SPI spi6(&hspi6, {nullptr, 0}, spi6_tx_buf, 3);
+  static STM32SPI spi6(&hspi6, spi6_rx_buf, spi6_tx_buf, UINT32_MAX);
   static STM32UART uart5(&huart5, uart5_rx_buf, {nullptr, 0}, 5);
   static STM32UART uart7(&huart7, uart7_rx_buf, uart7_tx_buf, 5);
   static STM32UART usart1(&huart1, usart1_rx_buf, usart1_tx_buf, 5);
