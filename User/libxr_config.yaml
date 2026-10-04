@@ -1,3 +1,4 @@
+generator: 6.0.0
 terminal_source: usb_otg_hs_cdc
 software_timer:
   priority: 2
@@ -50,11 +51,11 @@ ADC:
     dma_section: .axi_ram
     vref: 3.3
 FDCAN:
-  FDCAN1:
+  fdcan1:
     queue_size: 5
-  FDCAN2:
+  fdcan2:
     queue_size: 5
-  FDCAN3:
+  fdcan3:
     queue_size: 5
 USB:
   usb_otg_hs:
@@ -65,9 +66,8 @@ USB:
     rx_fifo_size: 256
     tx_fifo_size: 128
     dma_section: .axi_ram
-    cdc_tx_fifo_size: 128
-    cdc_rx_fifo_size: 128
-    cdc_queue_size: 3
+    cdc:
+    - {tx_fifo_size: 128, rx_fifo_size: 128, queue_size: 3}
     vid: 5840
     pid: 5266
     bcd: 62471
@@ -82,178 +82,11 @@ Terminal:
   run_as_thread: true
   thread_stack_depth: 2048
   thread_priority: 2
+database:
+  enable: true
+  block_size: 32
 SYSTEM: FreeRTOS
 DAC:
   dac1:
     init_voltage: 0.0
     vref: 3.3
-FlashLayout:
-  model: STM32H723VGT6
-  flash_base: '0x08000000'
-  flash_size_kb: 1024
-  sectors:
-  - index: 0
-    address: '0x08000000'
-    size_kb: 128.0
-  - index: 1
-    address: '0x08020000'
-    size_kb: 128.0
-  - index: 2
-    address: '0x08040000'
-    size_kb: 128.0
-  - index: 3
-    address: '0x08060000'
-    size_kb: 128.0
-  - index: 4
-    address: '0x08080000'
-    size_kb: 128.0
-  - index: 5
-    address: '0x080A0000'
-    size_kb: 128.0
-  - index: 6
-    address: '0x080C0000'
-    size_kb: 128.0
-  - index: 7
-    address: '0x080E0000'
-    size_kb: 128.0
-device_aliases:
-  power_manager:
-    type: PowerManager
-    aliases:
-    - power_manager
-  LCD_BLK:
-    type: GPIO
-    aliases:
-    - LCD_BLK
-  LCD_RES:
-    type: GPIO
-    aliases:
-    - LCD_RES
-  ACC_CS:
-    type: GPIO
-    aliases:
-    - ACC_CS
-  POWER_24V_2:
-    type: GPIO
-    aliases:
-    - POWER_24V_2
-  PC14_OSC32_IN:
-    type: GPIO
-    aliases:
-    - PC14_OSC32_IN
-  POWER_5V:
-    type: GPIO
-    aliases:
-    - POWER_5V
-  ACC_INT:
-    type: GPIO
-    aliases:
-    - ACC_INT
-  W25Q64_CS:
-    type: GPIO
-    aliases:
-    - W25Q64_CS
-  GYRO_INT:
-    type: GPIO
-    aliases:
-    - GYRO_INT
-  LCD_CS:
-    type: GPIO
-    aliases:
-    - LCD_CS
-  pwm_tim1_ch1:
-    type: PWM
-    aliases:
-    - pwm_tim1_ch1
-  pwm_tim1_ch3:
-    type: PWM
-    aliases:
-    - pwm_tim1_ch3
-  pwm_tim12_ch2:
-    type: PWM
-    aliases:
-    - pwm_tim12_ch2
-  pwm_tim2_ch1:
-    type: PWM
-    aliases:
-    - pwm_tim2_ch1
-  pwm_tim2_ch3:
-    type: PWM
-    aliases:
-    - pwm_tim2_ch3
-  pwm_tim3_ch4:
-    type: PWM
-    aliases:
-    - pwm_tim3_ch4
-  adc1_adc_channel_4:
-    type: ADC
-    aliases:
-    - adc1_adc_channel_4
-  adc1_adc_channel_19:
-    type: ADC
-    aliases:
-    - adc1_adc_channel_19
-  dac1_out2:
-    type: DAC
-    aliases:
-    - dac1_out2
-  spi2:
-    type: SPI
-    aliases:
-    - spi2
-  spi6:
-    type: SPI
-    aliases:
-    - spi6
-  uart5:
-    type: UART
-    aliases:
-    - uart5
-  uart7:
-    type: UART
-    aliases:
-    - uart7
-  usart1:
-    type: UART
-    aliases:
-    - usart1
-  usart10:
-    type: UART
-    aliases:
-    - usart10
-  usart2:
-    type: UART
-    aliases:
-    - usart2
-  usart3:
-    type: UART
-    aliases:
-    - usart3
-  fdcan1:
-    type: FDCAN
-    aliases:
-    - fdcan1
-  fdcan2:
-    type: FDCAN
-    aliases:
-    - fdcan2
-  fdcan3:
-    type: FDCAN
-    aliases:
-    - fdcan3
-  usb_otg_hs_cdc:
-    type: UART
-    aliases:
-    - usb_otg_hs_cdc
-  ramfs:
-    type: RamFS
-    aliases:
-    - ramfs
-  terminal:
-    type: Terminal<32, 32, 5, 5>
-    aliases:
-    - terminal
-  PA15:
-    type: GPIO
-    aliases:
-    - PA15

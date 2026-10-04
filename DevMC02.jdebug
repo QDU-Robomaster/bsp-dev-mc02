@@ -4,7 +4,7 @@
 *                         www.segger.com                             *
 **********************************************************************
 
-File          : D:/Documents/XRobot/bsp-dev-mc02/DevMC02.jdebug
+File          : DevMC02.jdebug
 Created       : 30 Sep 2025 23:31
 Ozone Version : V3.38b
 */
@@ -23,11 +23,9 @@ void OnProjectLoad (void) {
   // Dialog-generated settings
   //
   Project.SetDevice ("STM32H723VG");
-  Project.SetHostIF ("USB", "20740401");
+  Project.SetHostIF ("USB", "");
   Project.SetTargetIF ("SWD");
   Project.SetTIFSpeed ("4 MHz");
-  Project.AddPathSubstitute ("D:/Documents/XRobot/bsp-dev-mc02", "$(ProjectDir)");
-  Project.AddPathSubstitute ("d:/documents/xrobot/bsp-dev-mc02", "$(ProjectDir)");
   Project.AddSvdFile ("$(InstallDir)/Config/CPU/Cortex-M7F.svd");
   //
   // User settings
