@@ -56,7 +56,7 @@ cmake --build --preset Debug
 
 在 CubeMX 中修改并重新生成代码后，运行 `libxr stm32 setup` 更新 `User/app_main.cpp`、`User/app_main.h`、`User/flash_map.hpp`、`User/libxr_config.yaml` 和 `cmake/LibXR.CMake`，`User Code` 区域保留。命令说明见 [LibXR_CppCodeGenerator](https://github.com/xrobot-org/LibXR_CppCodeGenerator)。
 
-`.github/workflows/xrobot_stm32.yml` 调用 XRobot 仓库中的共享工作流 `bsp-stm32-ci.yml`，写出工程名 `CtrBoard-H7_ALL` 和构建类型 `Debug`，构建默认配置的固件；推送 `v*` 标签时发布该固件。共享工作流的检查项与发布的文件见 [BSP CI](https://xrobot.work/docs/proj_man#bsp-ci)。
+`.github/workflows/xrobot_stm32.yml` 调用 XRobot 仓库中的共享工作流 `bsp-stm32-ci.yml`，写出工程名 `CtrBoard-H7_ALL` 和构建类型 `Debug`，构建默认配置的固件；推送 `v*` 标签时发布该固件。共享工作流的检查项与发布的文件见 [BSP CI](https://xrobot.work/docs/proj_man/proj-man-ci#bsp-ci)。
 
 Building uses CMake, Ninja and ST's `starm-clang` toolchain (provided by STM32CubeCLT or the VS Code STM32Cube extension), with `starm-clang` on `PATH`. The presets use `cmake/starm-clang.cmake` (picolibc configuration). XRobot is 1.0.0 and the LibXR CodeGenerator is 6.0.0, matching `xrobot:` in `Modules/modules.yaml` and `generator:` in `User/libxr_config.yaml`.
 
@@ -64,7 +64,7 @@ Building uses CMake, Ninja and ST's `starm-clang` toolchain (provided by STM32Cu
 
 After changing and regenerating the code in CubeMX, `libxr stm32 setup` updates `User/app_main.cpp`, `User/app_main.h`, `User/flash_map.hpp`, `User/libxr_config.yaml` and `cmake/LibXR.CMake`, and keeps the `User Code` regions. The commands are described in [LibXR_CppCodeGenerator](https://github.com/xrobot-org/LibXR_CppCodeGenerator).
 
-`.github/workflows/xrobot_stm32.yml` calls the shared workflow `bsp-stm32-ci.yml` of the XRobot repository and names the project `CtrBoard-H7_ALL` and the build type `Debug`, building the firmware of the default configuration; pushing a `v*` tag publishes that firmware. The checks of the shared workflow and the published files are described in [BSP CI](https://xrobot.work/en/docs/proj_man#bsp-ci).
+`.github/workflows/xrobot_stm32.yml` calls the shared workflow `bsp-stm32-ci.yml` of the XRobot repository and names the project `CtrBoard-H7_ALL` and the build type `Debug`, building the firmware of the default configuration; pushing a `v*` tag publishes that firmware. The checks of the shared workflow and the published files are described in [BSP CI](https://xrobot.work/en/docs/proj_man/proj-man-ci#bsp-ci).
 
 ## 4. 烧录与运行 / Flash and Run
 
