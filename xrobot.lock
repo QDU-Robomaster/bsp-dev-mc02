@@ -8,6 +8,6 @@ modules:
     repo: https://github.com/xrobot-org/BuzzerAlarm.git
     source: https://xrobot.work/xrobot-modules/index.yaml
     requested: same-or-dev
-    resolved_ref: dev
+    resolved_ref: master
     ref_kind: branch
-    commit: 8bd6b55d821200d2f97c40c1a49f41bb126b22e1
+    commit: a7c17cf7b1d10409848c32bd420cb393515e7f27
