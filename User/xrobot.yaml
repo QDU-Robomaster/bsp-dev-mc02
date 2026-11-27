@@ -6,5 +6,33 @@ modules:
       - alarm_freq: 1500
       - alarm_duration: 300
       - alarm_delay: 300
+  - module: xrobot-org/BMI088
+    id: bmi088
+    args:
+      - accl_cs: ACC_CS
+      - gyro_cs: GYRO_CS
+      - gyro_int: GYRO_INT
+      - spi: spi2
+      - heater_pwm: imu_heater_pwm
+      - database: database
+      - ramfs: ramfs
+      - param:
+          gyro_freq: BMI088::GyroFreq::GYRO_1000HZ_BW116HZ
+          accl_freq: BMI088::AcclFreq::ACCL_800HZ
+          gyro_range: BMI088::GyroRange::DEG_2000DPS
+          accl_range: BMI088::AcclRange::ACCL_24G
+          rotation: '{1.0f, 0.0f, 0.0f, 0.0f}'
+          pid_param:
+            k: 1.0f
+            p: 0.25f
+            i: 0.025f
+            d: 0.0f
+            i_limit: 20.0f
+            out_limit: 0.8f
+            cycle: false
+          gyro_topic_name: "bmi088_gyro"
+          accl_topic_name: "bmi088_accl"
+          target_temperature: 45
+          task_stack_depth: 2048
 settings:
   monitor_sleep_ms: 1000

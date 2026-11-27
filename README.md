@@ -29,13 +29,13 @@ The MC02 board uses an STM32H723VGTx and runs FreeRTOS. The terminal is provided
 
 | 配置 | 用途 |
 | --- | --- |
-| `User/xrobot.yaml` | 蜂鸣器报警：`xrobot-org/BuzzerAlarm` 实例 `buzzer` 使用 `pwm_tim12_ch2`，报警频率 1500 Hz，报警时长与间隔均为 300 ms |
+| `User/xrobot.yaml` | 蜂鸣器报警与 BMI088 温控 IMU：`xrobot-org/BuzzerAlarm`（`buzzer`，`pwm_tim12_ch2`，1500 Hz，300 ms / 300 ms）与 `xrobot-org/BMI088`（`bmi088`，`spi2` / `ACC_CS` / `GYRO_CS` / `GYRO_INT`，`imu_heater_pwm` 经 `pwm_tim8_ch3n` 与 `adc1_adc_channel_4` 做 5 V / 24 V 限功率及调试暂停硬件关断，目标 45 °C） |
 
 配置的格式见 [XRobot 文档](https://xrobot.work/docs/proj_man/proj-man-config)。
 
 | Configuration | Purpose |
 | --- | --- |
-| `User/xrobot.yaml` | Buzzer alarm: `xrobot-org/BuzzerAlarm` instance `buzzer` on `pwm_tim12_ch2`, alarm frequency 1500 Hz, alarm duration and delay 300 ms each |
+| `User/xrobot.yaml` | Buzzer alarm and temperature-controlled BMI088 IMU: `xrobot-org/BuzzerAlarm` (`buzzer` on `pwm_tim12_ch2`, 1500 Hz, 300 ms / 300 ms) and `xrobot-org/BMI088` (`bmi088` on `spi2` / `ACC_CS` / `GYRO_CS` / `GYRO_INT`, `imu_heater_pwm` over `pwm_tim8_ch3n` and `adc1_adc_channel_4` for dual-voltage 5 V / 24 V power capping and debug-halt hardware shutoff, target 45 °C) |
 
 The configuration format is described in the [XRobot documentation](https://xrobot.work/en/docs/proj_man/proj-man-config).
 
