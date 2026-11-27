@@ -116,7 +116,7 @@ int main(void)
   MX_TIM12_Init();
   MX_SPI6_Init();
   MX_SPI2_Init();
-  MX_TIM3_Init();
+  MX_TIM8_Init();
   MX_USART1_UART_Init();
   MX_USART2_UART_Init();
   MX_USART3_UART_Init();
@@ -273,6 +273,7 @@ void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
+  TIM8->BDTR &= ~TIM_BDTR_MOE;
   __disable_irq();
   while (1)
   {

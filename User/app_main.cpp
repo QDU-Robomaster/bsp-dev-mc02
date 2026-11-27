@@ -22,6 +22,7 @@
 using namespace LibXR;
 
 /* User Code Begin 1 */
+#include "imu_heater_pwm.hpp"
 /* User Code End 1 */
 
 extern ADC_HandleTypeDef hadc1;
@@ -34,8 +35,8 @@ extern SPI_HandleTypeDef hspi2;
 extern SPI_HandleTypeDef hspi6;
 extern TIM_HandleTypeDef htim1;
 extern TIM_HandleTypeDef htim2;
-extern TIM_HandleTypeDef htim3;
 extern TIM_HandleTypeDef htim4;
+extern TIM_HandleTypeDef htim8;
 extern TIM_HandleTypeDef htim12;
 extern UART_HandleTypeDef huart1;
 extern UART_HandleTypeDef huart2;
@@ -108,7 +109,7 @@ extern "C" void app_main(void)
   static STM32PWM pwm_tim12_ch2(&htim12, TIM_CHANNEL_2, false);
   static STM32PWM pwm_tim2_ch1(&htim2, TIM_CHANNEL_1, false);
   static STM32PWM pwm_tim2_ch3(&htim2, TIM_CHANNEL_3, false);
-  static STM32PWM pwm_tim3_ch4(&htim3, TIM_CHANNEL_4, false);
+  static STM32PWM pwm_tim8_ch3n(&htim8, TIM_CHANNEL_3, true);
 
   // SPI, UART, CAN
   static STM32SPI spi2(&hspi2, spi2_rx_buf, spi2_tx_buf, 3);
@@ -183,7 +184,7 @@ extern "C" void app_main(void)
   XR_REGISTER(pwm_tim12_ch2, LibXR::PWM);
   XR_REGISTER(pwm_tim2_ch1, LibXR::PWM);
   XR_REGISTER(pwm_tim2_ch3, LibXR::PWM);
-  XR_REGISTER(pwm_tim3_ch4, LibXR::PWM);
+  XR_REGISTER(pwm_tim8_ch3n, LibXR::PWM);
 
   XR_REGISTER(spi2, LibXR::SPI);
   XR_REGISTER(spi6, LibXR::SPI);
@@ -211,6 +212,8 @@ extern "C" void app_main(void)
   XR_REGISTER(database, LibXR::Database);
 
   /* User Code Begin 3 */
+  static ImuHeaterPWM imu_heater_pwm(pwm_tim8_ch3n, adc1_adc_channel_4);
+  XR_REGISTER(imu_heater_pwm, LibXR::PWM);
   /* User Code End 3 */
   XROBOT_MAIN();
 }

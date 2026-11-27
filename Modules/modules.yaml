@@ -1,3 +1,4 @@
 xrobot: 1.0.1
 modules:
 - xrobot-org/BuzzerAlarm@same-or-dev
+- xrobot-org/BMI088@same-or-dev
